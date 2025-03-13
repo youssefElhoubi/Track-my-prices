@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create("watch_list",function(Blueprint $table){
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->enum("role",["user","admine"]);
-            $table->enum("tier",["free","premium"]);
+            $table->foreignId("user_id")->references("id")->on("users")->onDelete("cascade");
+            $table->foreignId("product_id")->references("id")->on("products")->onDelete("cascade");
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists("watch_list");
     }
 };
