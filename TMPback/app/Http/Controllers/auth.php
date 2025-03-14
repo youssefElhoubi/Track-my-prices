@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\passworedResetMail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Hash;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
-use stdClass;
+
 
 class auth extends Controller
 {
@@ -54,6 +56,21 @@ class auth extends Controller
             return response()->json(["token" => $token], Response::HTTP_CREATED);
         } catch (ValidationException $e) {
             return response()->json(['error' => $e->errors()], Response::HTTP_BAD_REQUEST);
+        }
+    }
+    public function passworedResetLink(Request $req)
+    {
+        try {
+            $email = $req->email;
+            $user = User::where("email", "=", $email)->first();
+            if (!$user) {
+                return response()->json(["message" => "User not found with this credentails "], Response::HTTP_NOT_FOUND);
+            }
+            $detailes = ["email"=>$user->email,"id"=>$user->id];
+            Mail::to($email)->send(new passworedResetMail($detailes));
+            return response()->json(["message"=>"we will send you a message if we found your account"]);
+        } catch (\Throwable $e) {
+            return response()->json(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
         }
     }
 }

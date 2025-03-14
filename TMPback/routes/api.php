@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth;
 
 Route::middleware("gest")->group(function(){
-    Route::post('/signup', [auth::class,"signUp"]);
-    Route::post('/signin', [auth::class,"signIn"]);
+    Route::post('auth/signup', [auth::class,"signUp"]);
+    Route::post('auth/signin', [auth::class,"signIn"]);
+    Route::post('auth/passwored/forget', [auth::class,"passworedResetLink"]);
 });
