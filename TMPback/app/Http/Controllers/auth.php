@@ -32,4 +32,22 @@ class auth extends Controller
             return response()->json(['error' => $e->errors()], Response::HTTP_BAD_REQUEST);
         }
     }
+    public function signIn(Request $req)
+    {
+        try {
+            $validator = $req->validate([
+                'email' => 'required|email',
+                'password' => 'required|string|min:8',
+            ]);
+            $user = User::where("email", "=", $req->email)->first();
+            if (!Hash::check($req->password, $user->password, )) {
+                return response()->json(["message" => "something is wrong"], Response::HTTP_BAD_REQUEST);
+            }
+            $payload = [$user->id];
+            $token = JWT::encode($payload, env("JWT_SECRET"), "HS256");
+            return response()->json(["token" => $token], Response::HTTP_CREATED);
+        } catch (ValidationException $e) {
+            return response()->json(['error' => $e->errors()], Response::HTTP_BAD_REQUEST);
+        }
+    }
 }
