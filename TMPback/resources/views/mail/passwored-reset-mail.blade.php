@@ -15,7 +15,7 @@
                         Hello, <br>
                         We received a request to reset your password. Click the button below to create a new password.
                     </p>
-                    <a href="{{reset_link}}" style="background-color: #007bff; color: #ffffff; text-decoration: none; padding: 12px 24px; font-size: 16px; font-weight: bold; border-radius: 6px; display: inline-block; margin: 20px 0;">Reset Password</a>
+                    <a href="http://tmpback.test/api/auth/passwored/reset/{{$detailes['id']}}" style="background-color: #007bff; color: #ffffff; text-decoration: none; padding: 12px 24px; font-size: 16px; font-weight: bold; border-radius: 6px; display: inline-block; margin: 20px 0;">Reset Password</a>
                     <p style="color: #666; font-size: 14px;">If you didn't request this, you can safely ignore this email.</p>
                 </td>
             </tr>
@@ -25,7 +25,7 @@
                 <td style="padding: 20px; background-color: #f8f9fa; border-radius: 0 0 8px 8px;">
                     <p style="color: #888; font-size: 12px;">If the button above doesn't work, copy and paste this link into your browser:</p>
                     <p style="word-wrap: break-word; font-size: 12px;">
-                        <a href="{{reset_link}}" style="color: #007bff; text-decoration: none;">{{reset_link}}</a>
+                        <a href="http://tmpback.test/api/auth/passwored/reset/{{$detailes['id']}}" style="color: #007bff; text-decoration: none;">http://tmpback.test/api/auth/passwored/reset/{{$detailes['id']}}</a>
                     </p>
                 </td>
             </tr>
