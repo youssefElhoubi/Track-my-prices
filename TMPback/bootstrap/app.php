@@ -13,7 +13,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            "jwtcheck"=> \App\Http\Middleware\JWTvalidate::class
+            "jwtcheck"=> \App\Http\Middleware\JWTvalidate::class,
+            "gest"=>\App\Http\Middleware\gest::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
