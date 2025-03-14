@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Illuminate\Validation\ValidationException;
+use stdClass;
 
 class auth extends Controller
 {
@@ -43,7 +44,12 @@ class auth extends Controller
             if (!Hash::check($req->password, $user->password, )) {
                 return response()->json(["message" => "something is wrong"], Response::HTTP_BAD_REQUEST);
             }
-            $payload = [$user->id];
+            $expirationTime = time() + 3600;
+            $payload = [
+                'sub' => $user->id,
+                'iat' => time(),
+                'exp' => $expirationTime,
+            ];
             $token = JWT::encode($payload, env("JWT_SECRET"), "HS256");
             return response()->json(["token" => $token], Response::HTTP_CREATED);
         } catch (ValidationException $e) {

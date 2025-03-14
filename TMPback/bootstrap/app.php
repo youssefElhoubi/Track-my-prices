@@ -12,7 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->alias([
+            "jwtcheck"=> \App\Http\Middleware\JWTvalidate::class
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
