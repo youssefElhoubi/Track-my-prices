@@ -66,11 +66,28 @@ class auth extends Controller
             if (!$user) {
                 return response()->json(["message" => "User not found with this credentails "], Response::HTTP_NOT_FOUND);
             }
-            $detailes = ["email"=>$user->email,"id"=>$user->id];
+            $detailes = ["email" => $user->email, "id" => $user->id];
             Mail::to($email)->send(new passworedResetMail($detailes));
-            return response()->json(["message"=>"we will send you a message if we found your account"]);
+            return response()->json(["message" => "we will send you a message if we found your account"]);
         } catch (\Throwable $e) {
             return response()->json(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
+    }
+    public function passworedChange(Request $req, $id)
+    {
+        try {
+            $validation = $req->validate([
+                "password" => "string|min:8"
+            ]);
+            $user = User::find($id);
+            if (!$user) {
+                return response()->json(["message" => "this user does not exit on our db to change there passwored"], Response::HTTP_NOT_FOUND);
+            }
+            $user->password = $req->password;
+            $user->save();
+            return response()->json(["massage" => "your password have been changed successfuly"], Response::HTTP_OK);
+        } catch (ValidationException $e) {
+            return response()->json(['error' => $e->errors()], Response::HTTP_BAD_REQUEST);
         }
     }
 }
