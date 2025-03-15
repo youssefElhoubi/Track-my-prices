@@ -26,7 +26,7 @@ class JWTvalidate
         if ($payload->exp < time()) {
             return response()->json(["message" => "token has expired"], Response::HTTP_UNAUTHORIZED);
         }
-        $request->merge(['user_id' => $payload->sub]); 
+        $request->merge(['user_id' => $payload->sub,"user_role"=>$payload->role]); 
         return $next($request);
     }
 }

@@ -49,6 +49,7 @@ class auth extends Controller
             $expirationTime = time() + 3600;
             $payload = [
                 'sub' => $user->id,
+                'role' => $user->role,
                 'iat' => time(),
                 'exp' => $expirationTime,
             ];
