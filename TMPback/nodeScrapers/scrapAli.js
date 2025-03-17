@@ -1,16 +1,25 @@
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
+import path from "path";
+import { fileURLToPath } from "url";
 
 puppeteer.use(StealthPlugin());
 
 const scrapeAliExpressPrice = async (url) => {
     try {
+        const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+        const pathToExtension = path.join(__dirname, "2captcha-solver");
+        console.log(pathToExtension);
+
         const browser = await puppeteer.launch({
             headless: false,
             args: [
                 "--no-sandbox",
                 "--disable-setuid-sandbox",
                 "--disable-blink-features=AutomationControlled",
+                `--disable-extentions-except=${pathToExtension}`,
+                `--load-extension=${pathToExtension}`
             ],
         });
 
@@ -38,6 +47,8 @@ const scrapeAliExpressPrice = async (url) => {
         await page.waitForSelector(".price--currentPriceText--V8_y_b5", {
             timeout: 30000,
         });
+        // By default, waitForSelector waits for 30 seconds, but this time is usually not enough, so we specify the timeout value manually with the second parameter. The timeout value is specified in "ms".
+        await page.waitForSelector(`.captcha-solver[data-state="solved"]`, { timeout: 180000 })
 
         // Extract the price text
         const productPrice = await page.$eval(
