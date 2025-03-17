@@ -2,15 +2,13 @@ import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import path from "path";
 import { fileURLToPath } from "url";
+import defaultExport from "puppeteer-extra-plugin-stealth";
 
 puppeteer.use(StealthPlugin());
 
 const scrapeAliExpressPrice = async (url) => {
     try {
         const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-        const pathToExtension = path.join(__dirname, "2captcha-solver");
-        console.log(pathToExtension);
 
         const browser = await puppeteer.launch({
             headless: false,
@@ -72,6 +70,7 @@ const scrapeAliExpressPrice = async (url) => {
         };
     }
 };
+export default scrapeAliExpressPrice;
 
 // Replace with an actual AliExpress product URL
 scrapeAliExpressPrice(process.argv[2]);

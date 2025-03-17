@@ -1,5 +1,6 @@
 import puppeteer from "puppeteer";
 import { scrapAmazon } from "./scrapamazon";
+import scrapeAliExpressPrice from "./scrapAli";
 
 async function scrapeWebsite(url) {
     const supportedWebsides = ["www.amazon.com","www.aliexpress.com","www.ebay.com"]
@@ -8,10 +9,11 @@ async function scrapeWebsite(url) {
     if (indexOfWebSide == -1) {
         const error = "this webside is not supported";
         console.log(JSON.stringify(error));
+        return;
     }
-    if (indexOfWebSide==0) {
-        scrapAmazon(url)
-    }
+    indexOfWebSide == 0 ? scrapAmazon(url):"";
+    indexOfWebSide == 1 ? scrapeAliExpressPrice(url):"";
+
 
 }
 
