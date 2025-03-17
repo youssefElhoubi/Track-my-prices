@@ -8,9 +8,9 @@ export const scrapAmazon = async (url) => {
 
         await page.goto(url, { waitUntil: "domcontentloaded", timeout: 10000 });
 
-        const holePrice = await page.$eval(".a-offscreen", el => el.innerText).catch(() => null);
-        const productTitle = await page.$eval(".product-title-word-break", el => el.innerText).catch(() => null);
-        const productImage = await page.$eval("#landingImage", el => el.src).catch(() => null);
+        const holePrice = await page.$eval(".a-offscreen", el => el.innerText);
+        const productTitle = await page.$eval(".product-title-word-break", el => el.innerText);
+        const productImage = await page.$eval("#landingImage", el => el.src);
 
         if (!productTitle && !holePrice && !productImage) {
             console.log(JSON.stringify({ error: "No product data found", code: 404 }));
