@@ -28,7 +28,13 @@ class auth extends Controller
                 'email' => $req->email,
                 'password' => Hash::make($req->password)
             ]);
-            $payload = [$user->id];
+            $expirationTime = time() + 3600;
+            $payload = [
+                'sub' => $user->id,
+                'role' => $user->role,
+                'iat' => time(),
+                'exp' => $expirationTime,
+            ];
             $token = JWT::encode($payload, env("JWT_SECRET"), "HS256");
             return response()->json(["token" => $token], Response::HTTP_CREATED);
         } catch (ValidationException $e) {
