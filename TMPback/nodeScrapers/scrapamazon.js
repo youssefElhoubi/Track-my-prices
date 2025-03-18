@@ -19,7 +19,6 @@
                 waitUntil: "networkidle2",
                 timeout: 90000,
             });
-            console.log("whent to the page ");
             // Set a realistic user-agent
             await page.setUserAgent(
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.5414.120 Safari/537.36"

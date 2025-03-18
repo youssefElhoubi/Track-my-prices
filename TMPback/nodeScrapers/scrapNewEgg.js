@@ -14,14 +14,12 @@ const scrapNewEgg = async (url) => {
         ]
     });
     try {
-        console.log("I've got here some how ");
         
         const page = await browser.newPage();
         await page.goto(url, {
             waitUntil: "networkidle2",
             timeout: 90000,
         });
-        console.log("whent to the page ");
         // Set a realistic user-agent
         await page.setUserAgent(
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.5414.120 Safari/537.36"
@@ -44,13 +42,13 @@ const scrapNewEgg = async (url) => {
             fullPrice
         }
         // the product scraped data 
-        console.log(JSON.stringify({
+        return console.log(JSON.stringify({
             productInfo,
             status: 200
         }));
     } catch (error) {
         console.error({
-            status: "error",
+            status: 500,
             message: error.message,
         });
     } finally {

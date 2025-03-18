@@ -9,10 +9,9 @@ async function scrapeWebsite(url) {
         const URLinfo = new URL(url);
         const indexOfWebSide = supportedWebsides.indexOf(URLinfo.host);
 
-        console.log("Detected Website Index:", indexOfWebSide);
 
         if (indexOfWebSide === -1) {
-            console.error("Error: This website is not supported.");
+            console.log(JSON.stringify("Error: This website is not supported."));
             return;
         }
 
