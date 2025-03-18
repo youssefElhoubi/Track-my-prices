@@ -14,7 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             "jwtcheck"=> \App\Http\Middleware\JWTvalidate::class,
-            "gest"=>\App\Http\Middleware\gest::class
+            "gest"=>\App\Http\Middleware\gest::class,
+            "isUser"=>\App\Http\Middleware\isUser::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

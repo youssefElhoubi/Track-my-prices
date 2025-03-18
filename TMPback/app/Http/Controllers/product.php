@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Validation\ValidationException;
 use App\Models\Products;
+use App\Models\products_history;
 
 class product extends Controller
 {
@@ -20,17 +21,22 @@ class product extends Controller
                 "productPlatform" => "required|string",
                 "url" => "required|url"
             ]);
-            $existingProduct = products::where("url","=",$request->url)->exists();
+            $existingProduct = products::where("url", "=", $request->url)->exists();
             if ($existingProduct) {
-                return response()->json(["message"=>"this product alredy exists"],Response::HTTP_ALREADY_REPORTED);
+                return response()->json(["message" => "this product alredy exists"], Response::HTTP_ALREADY_REPORTED);
             }
             // Create new product
             $newProduct = Products::create([
                 "url" => $request->url,
-                "name" => $$request->productTitle,
-                "curentPrice" => $request->productPrice, // Correct mapping
+                "name" => $request->productTitle,
+                "curentPrice" => $request->productPrice,
                 "platformName" => $request->productPlatform,
                 "user_id" => $request->user_id,
+            ]);
+            products_history::create([
+                "product_id" => $newProduct->id,
+                "CurrentPrice" => $newProduct->curentPrice,
+                "priceDiff" => 0
             ]);
 
             return response()->json([
