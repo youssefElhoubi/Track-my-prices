@@ -59,4 +59,12 @@ class product extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+    public function allProducts(){
+        $products = Products::paginate(10);
+        return response()->json($products,Response::HTTP_OK);
+    }
+    public function MyProducts(Request $request){
+        $products = Products::where("user_id","=",$request->user_id)->get();
+        return response()->json($products,Response::HTTP_OK);
+    }
 }

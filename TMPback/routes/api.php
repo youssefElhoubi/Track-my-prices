@@ -15,4 +15,6 @@ Route::middleware("gest")->group(function () {
 Route::middleware(["jwtcheck", "isUser"])->group(function () {
     Route::post("product/scrap", [scraper::class, "scrap"]);
     Route::post("product/add", [product::class, "addProduct"]);
+    Route::get("product/all", [product::class, "allProducts"]);
+    Route::get("product/own", [product::class, "MyProducts"]);
 });
