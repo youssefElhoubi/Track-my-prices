@@ -11,4 +11,6 @@ Route::middleware("gest")->group(function(){
     Route::post('auth/passwored/forget', [auth::class,"passworedResetLink"]);
     Route::patch('auth/passwored/change/{id}', [auth::class,"passworedChange"]);
 });
-Route::post('test', [scraper::class,"scrap"])->middleware("jwtcheck");
+Route::middleware("jwtcheck")->group(function(){
+    Route::post("/scrap",[scraper::class,"scrap"]);
+});
