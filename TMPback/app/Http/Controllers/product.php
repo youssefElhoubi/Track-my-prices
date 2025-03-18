@@ -59,12 +59,58 @@ class product extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-    public function allProducts(){
+    public function allProducts()
+    {
         $products = Products::paginate(10);
-        return response()->json($products,Response::HTTP_OK);
+
+        if ($products->isEmpty()) {
+            return response()->json([
+                "success" => false,
+                "message" => "No products found."
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json([
+            "success" => true,
+            "message" => "All products retrieved successfully.",
+            "data" => $products
+        ], Response::HTTP_OK);
     }
-    public function MyProducts(Request $request){
-        $products = Products::where("user_id","=",$request->user_id)->get();
-        return response()->json($products,Response::HTTP_OK);
+
+    public function myProducts(Request $request)
+    {
+
+        $products = Products::where("user_id", $request->user_id)->get();
+
+        if ($products->isEmpty()) {
+            return response()->json([
+                "success" => false,
+                "message" => "No products found for this user."
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json([
+            "success" => true,
+            "message" => "User products retrieved successfully.",
+            "data" => $products
+        ], Response::HTTP_OK);
+    }
+
+    public function productInfo($id)
+    {
+        $product = Products::find($id);
+
+        if (!$product) {
+            return response()->json([
+                "success" => false,
+                "message" => "Product not found."
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json([
+            "success" => true,
+            "message" => "Product retrieved successfully.",
+            "data" => $product
+        ], Response::HTTP_OK);
     }
 }
