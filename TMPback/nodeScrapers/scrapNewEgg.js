@@ -68,7 +68,7 @@ const scrapNewEgg = async (url) => {
         const productInfo = {
             success: true,
             code: 200,
-            data: { title, image, fullPrice }
+            data: { title, image, fullPrice,platformName:"NewEgg" }
         };
 
         console.log(JSON.stringify(productInfo));

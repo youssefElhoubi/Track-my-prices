@@ -14,17 +14,24 @@ class scraper extends Controller
     public function scrap(Request $request)
     {
         try {
-                $validation = $request->validate([
-                    "url" => "required|url"
-                ]);
-                $process = new Process(["node", base_path("nodeScrapers/nodeScraper.js"), $request->url]);
-                $process->run();
-                $scrapedData = json_decode($process->getOutput());
-                if ($scrapedData->code ==200) {
-                }
-                return response()->json($scrapedData);
-            } catch (ValidationException $th) {
-                return response()->json(['error' => $th->errors()], Response::HTTP_BAD_REQUEST);
+            $validation = $request->validate([
+                "url" => "required|url"
+            ]);
+            $process = new Process(["node", base_path("nodeScrapers/nodeScraper.js"), $request->url]);
+            $process->run();
+            $scrapedData = json_decode($process->getOutput());
+            if ($scrapedData->code === 200) {
+                return response()->json([
+                    "producttitle" => $scrapedData->title,
+                    "productImage" => $scrapedData->image,
+                    "productPrice" => $scrapedData->fullPrice,
+                    "productPlatform" => $scrapedData->platformName
+                ], $scrapedData->code);
+            } else if ($scrapedData->code === 404 || 500) {
+                return response()->json(["error" => $scrapedData->error], $scrapedData->code);
             }
+        } catch (ValidationException $th) {
+            return response()->json(['error' => $th->errors()], Response::HTTP_BAD_REQUEST);
+        }
     }
 }

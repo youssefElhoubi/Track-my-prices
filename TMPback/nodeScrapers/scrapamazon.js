@@ -26,7 +26,7 @@ const scrapAmazon = async (url) => {
             "Accept-Language": "en-US,en;q=0.9",
         });
 
-        
+
         await page.goto(url, {
             waitUntil: "networkidle2",
             timeout: 90000,
@@ -65,7 +65,7 @@ const scrapAmazon = async (url) => {
         const productInfo = {
             success: true,
             code: 200,
-            data: { productTitle, holePrice, productImage }
+            data: { productTitle, holePrice, productImage, platformName: "Amazon" }
         };
 
         console.log(JSON.stringify(productInfo));
