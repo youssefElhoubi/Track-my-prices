@@ -1,20 +1,33 @@
-import puppeteer from "puppeteer";
-import { scrapAmazon } from "./scrapamazon";
-import scrapeAliExpressPrice from "./scrapAli";
+// import puppeteer from "puppeteer";
+import scrapAmazon from "./scrapamazon.js";
+import scrapeAliExpressPrice from "./scrapAli.js";
+import scrapNewEgg from "./scrapNewEgg.js";
 
 async function scrapeWebsite(url) {
-    const supportedWebsides = ["www.amazon.com","www.aliexpress.com","www.ebay.com"]
-    URLinfo = new URL(url);
-    indexOfWebSide = supportedWebsides.indexOf(URLinfo.host);
-    if (indexOfWebSide == -1) {
-        const error = "this webside is not supported";
-        console.log(JSON.stringify(error));
-        return;
+    try {
+        const supportedWebsides = ["www.amazon.com", "www.aliexpress.com", "www.ebay.com", "www.newegg.com"];
+        const URLinfo = new URL(url);
+        const indexOfWebSide = supportedWebsides.indexOf(URLinfo.host);
+
+        console.log("Detected Website Index:", indexOfWebSide);
+
+        if (indexOfWebSide === -1) {
+            console.error("Error: This website is not supported.");
+            return;
+        }
+
+        if (indexOfWebSide === 0) {
+            await scrapAmazon(url);
+        } else if (indexOfWebSide === 1) {
+            await scrapeAliExpressPrice(url);
+        } else if (indexOfWebSide === 3) {
+            await scrapNewEgg(url);
+        } else {
+            console.error("Error: No valid scraping function found.");
+        }
+    } catch (error) {
+        console.error("Scraping Error:", error.message);
     }
-    indexOfWebSide == 0 ? scrapAmazon(url):"";
-    indexOfWebSide == 1 ? scrapeAliExpressPrice(url):"";
-
-
 }
 
 scrapeWebsite(process.argv[2]);

@@ -4,6 +4,7 @@ import StealthPlugin from "puppeteer-extra-plugin-stealth";
 puppeteer.use(StealthPlugin());
 
 const scrapNewEgg = async (url) => {
+    
     const browser = await puppeteer.launch({
         headless: true,
         args: [
@@ -13,11 +14,14 @@ const scrapNewEgg = async (url) => {
         ]
     });
     try {
+        console.log("I've got here some how ");
+        
         const page = await browser.newPage();
         await page.goto(url, {
             waitUntil: "networkidle2",
             timeout: 90000,
         });
+        console.log("whent to the page ");
         // Set a realistic user-agent
         await page.setUserAgent(
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.5414.120 Safari/537.36"
@@ -54,4 +58,6 @@ const scrapNewEgg = async (url) => {
     }
 
 };
-scrapNewEgg(process.argv[2]);
+export default scrapNewEgg;
+// this one is just for testing 
+// scrapNewEgg(process.argv[2]);

@@ -6,21 +6,19 @@ import { fileURLToPath } from "url";
 puppeteer.use(StealthPlugin());
 
 const scrapeAliExpressPrice = async (url) => {
+    const __dirname = path.dirname(fileURLToPath(import.meta.url));
+    const pathToExtension = path.join(__dirname, "2captcha-solver")
+    const browser = await puppeteer.launch({
+        headless: false,
+        args: [
+            "--no-sandbox",
+            "--disable-setuid-sandbox",
+            "--disable-blink-features=AutomationControlled",
+            `--disable-extentions-except=${pathToExtension}`,
+            `--load-extension=${pathToExtension}`
+        ],
+    });
     try {
-        const __dirname = path.dirname(fileURLToPath(import.meta.url));
-        const pathToExtension = path.join(__dirname,"2captcha-solver")
-
-        const browser = await puppeteer.launch({
-            headless: true,
-            args: [
-                "--no-sandbox",
-                "--disable-setuid-sandbox",
-                "--disable-blink-features=AutomationControlled",
-                `--disable-extentions-except=${pathToExtension}`,
-                `--load-extension=${pathToExtension}`
-            ],
-        });
-
         const page = await browser.newPage();
 
         // Set a realistic user-agent
@@ -46,7 +44,7 @@ const scrapeAliExpressPrice = async (url) => {
             timeout: 30000,
         });
         // By default, waitForSelector waits for 30 seconds, but this time is usually not enough, so we specify the timeout value manually with the second parameter. The timeout value is specified in "ms".
-        await page.waitForSelector(`.captcha-solver[data-state="solved"]`, { timeout: 180000 })
+        await page.waitForSelector(`.captcha-solver["data-state="solved"]`, { timeout: 180000 })
 
         // Extract the price text
         const productPrice = await page.$eval(
@@ -56,8 +54,7 @@ const scrapeAliExpressPrice = async (url) => {
 
         console.log(`💰 Product Price: ${productPrice}`);
 
-        await browser.close();
-
+        
         return {
             status: "success",
             price: productPrice,
@@ -68,9 +65,11 @@ const scrapeAliExpressPrice = async (url) => {
             status: "error",
             message: error.message,
         };
+    }finally{
+        await browser.close();
     }
 };
 export default scrapeAliExpressPrice;
 
 // Replace with an actual AliExpress product URL
-scrapeAliExpressPrice(process.argv[2]);
+// scrapeAliExpressPrice(process.argv[2]);
