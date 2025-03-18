@@ -20,7 +20,10 @@ class product extends Controller
                 "productPlatform" => "required|string",
                 "url" => "required|url"
             ]);
-
+            $existingProduct = products::where("url","=",$request->url)->exists();
+            if ($existingProduct) {
+                return response()->json(["message"=>"this product alredy exists"],Response::HTTP_ALREADY_REPORTED);
+            }
             // Create new product
             $newProduct = Products::create([
                 "url" => $request->url,
