@@ -1,7 +1,6 @@
-// import puppeteer from "puppeteer";
-import scrapAmazon from "./scrapamazon.js";
-import scrapeAliExpressPrice from "./scrapAli.js";
-import scrapNewEgg from "./scrapNewEgg.js";
+import scrapAmazon from "./scrapers/scrapamazon.js";
+import scrapeAliExpressPrice from "./scrapers/scrapAli.js";
+import scrapNewEgg from "./scrapers/scrapNewEgg.js";
 
 async function scrapeWebsite(url) {
     try {
