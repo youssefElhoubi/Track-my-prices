@@ -15,11 +15,16 @@ const scrapeAliExpressPrice = async (url) => {
             "--disable-setuid-sandbox",
             "--disable-blink-features=AutomationControlled",
             `--disable-extentions-except=${pathToExtension}`,
-            `--load-extension=${pathToExtension}`
+            `--load-extension=${pathToExtension}`,
+            "--proxy-server=38.154.227.167:5868,"
         ],
     });
     try {
         const page = await browser.newPage();
+        await page.authenticate({
+            username: 'cptjffkd',
+            password: 'f0i56dktc42r',
+        })
 
         // Set a realistic user-agent
         await page.setUserAgent(
@@ -72,4 +77,5 @@ const scrapeAliExpressPrice = async (url) => {
 export default scrapeAliExpressPrice;
 
 // Replace with an actual AliExpress product URL
-// scrapeAliExpressPrice(process.argv[2]);
+scrapeAliExpressPrice(process.argv[2]);
+    
