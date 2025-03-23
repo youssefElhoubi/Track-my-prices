@@ -77,5 +77,4 @@ const scrapeAliExpressPrice = async (url) => {
 export default scrapeAliExpressPrice;
 
 // Replace with an actual AliExpress product URL
-scrapeAliExpressPrice(process.argv[2]);
-    
+// scrapeAliExpressPrice(process.argv[2]);

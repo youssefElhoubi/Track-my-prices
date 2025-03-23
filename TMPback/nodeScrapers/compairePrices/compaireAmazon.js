@@ -4,7 +4,7 @@ import useProxy from "puppeteer-page-proxy";
 
 puppeteer.use(StealthPlugin());
 
-const compareAmazon = async (url) => {
+const compareAmazon = async (title) => {
     const browser = await puppeteer.launch({
         headless: false,
         args: [
@@ -33,8 +33,8 @@ const compareAmazon = async (url) => {
             "Referer": "https://www.google.com/",
         });
 
-        await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60000 });
-        await page.locator("#twotabsearchtextbox").fill("gaming PC");
+        await page.goto("https://www.amazon.com/", { waitUntil: "domcontentloaded", timeout: 60000 });
+        await page.locator("#twotabsearchtextbox").fill(title);
         await page.locator("#nav-search-submit-button").click();
         await page.waitForSelector('[data-cy="title-recipe"] h2 span', { timeout: 5000 });
         const elementTitle = await page.$eval(`[data-cy="title-recipe"] h2 span`, el => el.innerText);
