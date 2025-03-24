@@ -48,11 +48,11 @@ const compareAmazon = async (title) => {
         }
 
         console.log(JSON.stringify(productInof));
-
         // Close browser
-        await browser.close();
     } catch (error) {
         console.error("❌ Error:", error);
+        await browser.close();
+    }finally{
         await browser.close();
     }
 };
