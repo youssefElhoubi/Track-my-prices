@@ -1,6 +1,7 @@
 import scrapAmazon from "./scrapers/scrapamazon.js";
 import scrapeAliExpressPrice from "./scrapers/scrapAli.js";
 import scrapNewEgg from "./scrapers/scrapNewEgg.js";
+import scrapEbay from "./scrapers/scrapEbay.js";
 
 async function scrapeWebsite(url) {
     try {
@@ -20,7 +21,10 @@ async function scrapeWebsite(url) {
             await scrapeAliExpressPrice(url);
         } else if (indexOfWebSide === 3) {
             await scrapNewEgg(url);
-        } else {
+        } else if(indexOfWebSide === 2 ){
+            await scrapEbay(url);
+        }
+        else {
             console.error("Error: No valid scraping function found.");
         }
     } catch (error) {
