@@ -5,12 +5,12 @@ Puppeteer.use(StealthPlugin());
 
 const compareEbay = async (title) => {
     const browser = await Puppeteer.launch({
-        headless: true,
+        headless: false,
         args: [
             "--no-sandbox",
             "--disable-setuid-sandbox",
             "--disable-blink-features=AutomationControlled",
-            "--proxy-server=38.154.227.167:5868", // Add your proxy server here
+            "--proxy-server=38.154.227.167:5868",
         ]
     });
 
@@ -40,8 +40,8 @@ const compareEbay = async (title) => {
 
         // Authenticate if proxy requires credentials
         await page.authenticate({
-            username: "username", // Replace with actual proxy username
-            password: "password", // Replace with actual proxy password
+            username: "cptjffkd",
+            password: "f0i56dktc42r", 
         });
 
         // Open eBay
@@ -95,5 +95,6 @@ const compareEbay = async (title) => {
         if (browser) await browser.close();
     }
 };
+compareEbay(process.argv[2])
 
 export default compareEbay;
