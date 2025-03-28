@@ -28,8 +28,8 @@ const compareNewEgg = async (title) => {
             "Referer": "https://www.google.com/",
         });
         await page.authenticate({
-            username: "username",
-            password: "password"
+            username: "cptjffkd",
+            password: "f0i56dktc42r"
         })
 
         // Open Newegg

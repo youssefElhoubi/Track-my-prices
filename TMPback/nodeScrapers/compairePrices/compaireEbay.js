@@ -1,24 +1,33 @@
-import puppeteer from "puppeteer-extra";
+import Puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
-const compaireEbay = async (title) => {
-    puppeteer.use(StealthPlugin());
-    const browser = await puppeteer.launch({
-        headless: false,
+Puppeteer.use(StealthPlugin());
+
+const compareEbay = async (title) => {
+    const browser = await Puppeteer.launch({
+        headless: true,
         args: [
             "--no-sandbox",
             "--disable-setuid-sandbox",
             "--disable-blink-features=AutomationControlled",
-        ],
+            "--proxy-server=38.154.227.167:5868", // Add your proxy server here
+        ]
     });
+
     try {
         const page = await browser.newPage();
-        await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.5414.120 Safari/537.36");
+
+        // Set a realistic User-Agent
+        await page.setUserAgent(
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
+        );
+
+        // Set extra headers to avoid bot detection
         await page.setExtraHTTPHeaders({
             "Accept-Language": "en-US,en;q=0.9",
             "Referer": "https://www.google.com/",
             "Upgrade-Insecure-Requests": "1",
-            "DNT": "1",  // Do Not Track request header
+            "DNT": "1",
             "Connection": "keep-alive",
             "Sec-Fetch-Dest": "document",
             "Sec-Fetch-Mode": "navigate",
@@ -27,25 +36,64 @@ const compaireEbay = async (title) => {
             "Accept-Encoding": "gzip, deflate, br",
             "Cache-Control": "no-cache",
             "Pragma": "no-cache",
-        })
-        await page.goto("https://www.ebay.com", {
-            waitUntil: "networkidle2",
-            timeout: 90000,
         });
+
+        // Authenticate if proxy requires credentials
+        await page.authenticate({
+            username: "username", // Replace with actual proxy username
+            password: "password", // Replace with actual proxy password
+        });
+
+        // Open eBay
+        await page.goto("https://www.ebay.com", { waitUntil: "networkidle2", timeout: 90000 });
+
+        // Perform search
         await page.locator("#gh-ac").fill(title);
         await page.locator("#gh-search-btn").click();
         await page.waitForSelector(".srp-river-results.clearfix");
-        const productImage = await page.$eval("ul>li.s-item.s-item__pl-on-bottom img",el => el.src);
-        const productTitle = await page.$eval("ul>li.s-item.s-item__pl-on-bottom .s-item__title",el => el.innerText);
-        const productPrice = await page.$eval("ul>li.s-item.s-item__pl-on-bottom .s-item__price",el => el.innerText.split("$")[1]);
 
-        console.log(productPrice);
-        
+        // Scrape product data with error handling
+        let productTitle, productImage, productPrice;
+
+        try {
+            productTitle = await page.$eval("ul>li.s-item.s-item__pl-on-bottom .s-item__title", (el) => el.innerText.trim());
+        } catch {
+            console.error("❌ Product title not found.");
+            console.log(JSON.stringify({ error: "Product title is missing", code: 404 }));
+            return;
+        }
+
+        try {
+            productImage = await page.$eval("ul>li.s-item.s-item__pl-on-bottom img", (el) => el.src);
+        } catch {
+            console.error("❌ Product image not found.");
+            console.log(JSON.stringify({ error: "Product image is missing", code: 404 }));
+            return;
+        }
+
+        try {
+            productPrice = await page.$eval("ul>li.s-item.s-item__pl-on-bottom .s-item__price", (el) => el.innerText.split("$")[1].trim());
+        } catch {
+            console.error("❌ Product price not found.");
+            console.log(JSON.stringify({ error: "Product price is missing", code: 404 }));
+            return;
+        }
+
+        // Format response
+        const productInfo = {
+            success: true,
+            code: 200,
+            data: { productTitle, productImage, price: productPrice, platformName: "eBay" }
+        };
+
+        console.log(JSON.stringify(productInfo));
 
     } catch (error) {
-        console.log(error);
+        console.error("❌ Scraping Error:", error.message);
+        console.log(JSON.stringify({ error: error.message, code: 500 }));
     } finally {
-        await browser.close()
+        if (browser) await browser.close();
     }
-}
-compaireEbay(process.argv[2]);
+};
+
+export default compareEbay;
