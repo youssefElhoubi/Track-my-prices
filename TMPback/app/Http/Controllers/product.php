@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Validation\ValidationException;
 use App\Models\Products;
 use App\Models\products_history;
+use App\Http\Controllers\compare;
 
 class product extends Controller
 {
@@ -99,7 +100,7 @@ class product extends Controller
     public function productInfo($id)
     {
         $product = Products::find($id);
-
+        $compairedProducts = compare::compaire($product->name,$product->platformName);
         if (!$product) {
             return response()->json([
                 "success" => false,
@@ -110,7 +111,8 @@ class product extends Controller
         return response()->json([
             "success" => true,
             "message" => "Product retrieved successfully.",
-            "data" => $product
+            "data" => $product,
+            "compairedProducts"=> $compairedProducts
         ], Response::HTTP_OK);
     }
     public function deleteProduct($id)

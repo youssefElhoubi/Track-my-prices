@@ -5,7 +5,7 @@ Puppeteer.use(StealthPlugin());
 
 const compareAmazon = async (title) => {
     const browser = await Puppeteer.launch({
-        headless: false,
+        headless: true, // this line only for debuging if the data is not scraped 
         args: [
             "--no-sandbox",
             "--disable-setuid-sandbox",
