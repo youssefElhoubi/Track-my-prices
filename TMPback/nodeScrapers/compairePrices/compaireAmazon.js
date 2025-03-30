@@ -1,24 +1,26 @@
-import puppeteer from "puppeteer-extra";
+import Puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
-puppeteer.use(StealthPlugin());
+Puppeteer.use(StealthPlugin());
 
 const compareAmazon = async (title) => {
-    const browser = await puppeteer.launch({
+    const browser = await Puppeteer.launch({
         headless: false,
         args: [
             "--no-sandbox",
             "--disable-setuid-sandbox",
             "--disable-blink-features=AutomationControlled",
-            "--proxy-server=38.154.227.167:5868,"
+            "--proxy-server=38.154.227.167:5868"
         ]
     });
 
     try {
         const page = await browser.newPage();
+
+        // Authenticate if proxy requires credentials
         await page.authenticate({
-            username: 'cptjffkd',
-            password: 'f0i56dktc42r',
+            username: "cptjffkd",
+            password: "f0i56dktc42r",
         });
 
         // Set a realistic User-Agent
@@ -30,32 +32,66 @@ const compareAmazon = async (title) => {
         await page.setExtraHTTPHeaders({
             "Accept-Language": "en-US,en;q=0.9",
             "Referer": "https://www.google.com/",
+            "Upgrade-Insecure-Requests": "1",
+            "DNT": "1",
+            "Connection": "keep-alive",
+            "Sec-Fetch-Dest": "document",
+            "Sec-Fetch-Mode": "navigate",
+            "Sec-Fetch-Site": "same-origin",
+            "Sec-Fetch-User": "?1",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Cache-Control": "no-cache",
+            "Pragma": "no-cache",
         });
 
-        await page.goto("https://www.amazon.com/", { waitUntil: "domcontentloaded", timeout: 60000 });
+        // Navigate to Amazon
+        await page.goto("https://www.amazon.com/", { waitUntil: "networkidle2", timeout: 90000 });
+
+        // Perform search
         await page.locator("#twotabsearchtextbox").fill(title);
         await page.locator("#nav-search-submit-button").click();
-        await page.waitForSelector('[data-cy="title-recipe"] h2 span', { timeout: 5000 });
-        const elementTitle = await page.$eval(`[data-cy="title-recipe"] h2 span`, el => el.innerText);
-        const elementPrice = await page.$eval(`.a-price .a-offscreen`, el => el.innerText);
+        await page.waitForSelector("[data-cy='title-recipe'] h2 span", { timeout: 10000 });
 
-        const elementImage = await page.$eval(`.s-image`, el => el.src);
-        const productInof = {
-            title: elementTitle,
-            price: elementPrice,
-            image: elementImage
+        // Scrape product data with error handling
+        let productTitle, productImage, productPrice;
+
+        try {
+            productTitle = await page.$eval("[data-cy='title-recipe'] h2 span", el => el.innerText.trim());
+        } catch {
+            console.error("❌ Product title not found.");
+            return JSON.stringify({ error: "Product title is missing", code: 404 });
         }
 
-        console.log(JSON.stringify(productInof));
-        // Close browser
+        try {
+            productImage = await page.$eval(".s-image", el => el.src);
+        } catch {
+            console.error("❌ Product image not found.");
+            return JSON.stringify({ error: "Product image is missing", code: 404 });
+        }
+
+        try {
+            productPrice = await page.$eval(".a-price .a-offscreen", el => el.innerText.trim());
+        } catch {
+            console.error("❌ Product price not found.");
+            return JSON.stringify({ error: "Product price is missing", code: 404 });
+        }
+
+        // Format response
+        const productInfo = {
+            success: true,
+            code: 200,
+            data: { productTitle, productImage, price: productPrice, platformName: "Amazon" }
+        };
+
+        return JSON.stringify(productInfo);
     } catch (error) {
-        console.error("❌ Error:", error);
-        await browser.close();
-    }finally{
-        await browser.close();
+        console.error("❌ Scraping Error:", error.message);
+        return JSON.stringify({ error: error.message, code: 500 });
+    } finally {
+        if (browser) await browser.close();
     }
 };
 
-// Example usage
-const amazonURL = process.argv[2] || "https://www.amazon.com/";
-compareAmazon(amazonURL);
+compareAmazon(process.argv[2]);
+
+export default compareAmazon;
