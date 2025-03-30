@@ -92,6 +92,4 @@ const compareEbay = async (title) => {
         if (browser) await browser.close();
     }
 };
-compareEbay(process.argv[2])
-
 export default compareEbay;
