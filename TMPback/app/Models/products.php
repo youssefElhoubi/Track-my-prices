@@ -14,4 +14,7 @@ class products extends Model
         "platformName",
         "user_id"
     ];
+    public function hestory() {
+        return $this->hasMany("products_history","product_id");
+    }
 }

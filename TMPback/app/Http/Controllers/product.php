@@ -100,18 +100,19 @@ class product extends Controller
     public function productInfo($id)
     {
         $product = Products::find($id);
-        $compairedProducts = compare::compaire($product->name,$product->platformName);
         if (!$product) {
             return response()->json([
                 "success" => false,
                 "message" => "Product not found."
             ], Response::HTTP_NOT_FOUND);
         }
-
+        $compairedProducts = compare::compaire($product->name,$product->platformName);
+        $productHestory = $product->hestory;
         return response()->json([
             "success" => true,
             "message" => "Product retrieved successfully.",
             "data" => $product,
+            "hestory"=> $compairedProducts,
             "compairedProducts"=> $compairedProducts
         ], Response::HTTP_OK);
     }
