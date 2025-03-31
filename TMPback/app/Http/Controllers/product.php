@@ -116,6 +116,7 @@ class product extends Controller
             "compairedProducts"=> $compairedProducts
         ], Response::HTTP_OK);
     }
+    
     public function deleteProduct($id)
     {
         $product = Products::find($id);
