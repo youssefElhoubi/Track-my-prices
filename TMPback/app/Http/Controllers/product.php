@@ -45,7 +45,6 @@ class product extends Controller
                 "message" => "Product added successfully.",
                 "productInfo" => $newProduct
             ], Response::HTTP_CREATED);
-
         } catch (ValidationException $e) {
             return response()->json([
                 "success" => false,
@@ -106,17 +105,17 @@ class product extends Controller
                 "message" => "Product not found."
             ], Response::HTTP_NOT_FOUND);
         }
-        $compairedProducts = compare::compaire($product->name,$product->platformName);
+        $compairedProducts = compare::compaire($product->name, $product->platformName);
         $productHestory = $product->hestory;
         return response()->json([
             "success" => true,
             "message" => "Product retrieved successfully.",
             "data" => $product,
-            "hestory"=> $compairedProducts,
-            "compairedProducts"=> $compairedProducts
+            "hestory" => $compairedProducts,
+            "compairedProducts" => $compairedProducts
         ], Response::HTTP_OK);
     }
-    
+
     public function deleteProduct($id)
     {
         $product = Products::find($id);
@@ -133,6 +132,28 @@ class product extends Controller
         return response()->json([
             "success" => true,
             "message" => "Product deleted successfully."
+        ], Response::HTTP_OK);
+    }
+    public function search(Request $request)
+    {
+        $search = trim($request->query('search', ''));
+
+        if (!$search) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Search query cannot be empty.',
+                'data' => []
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        $products = Products::where('name', 'LIKE', "%{$search}%")
+            ->limit(20) // Limit results to prevent performance issues
+            ->get(['id', 'name', 'price', 'image']); // Select only necessary fields
+
+        return response()->json([
+            'success' => true,
+            'message' => $products->isNotEmpty() ? 'Products retrieved successfully.' : 'No products found.',
+            'data' => $products
         ], Response::HTTP_OK);
     }
 }
