@@ -22,5 +22,5 @@ Route::middleware(["jwtcheck", "isUser"])->group(function () {
     Route::get("product/own", [product::class, "MyProducts"]);
     Route::get("product/{id}", [product::class, "productInfo"]);
     Route::delete("product/{id}", [product::class, "deleteProduct"]);
-    
+    Route::get("product",[product::class,"search"]);
 });
