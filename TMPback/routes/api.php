@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth;
 use App\Http\Controllers\scraper;
 use App\Http\Controllers\product;
+use App\Http\Controllers\watchlist;
 
 // sign up sign in end points
 
@@ -16,6 +17,7 @@ Route::middleware("gest")->group(function () {
 });
 // product end points
 Route::middleware(["jwtcheck", "isUser"])->group(function () {
+    // product end points
     Route::post("product/scrap", [scraper::class, "scrap"]);
     Route::post("product/add", [product::class, "addProduct"]);
     Route::get("product/all", [product::class, "allProducts"]);
@@ -23,4 +25,7 @@ Route::middleware(["jwtcheck", "isUser"])->group(function () {
     Route::get("product/{id}", [product::class, "productInfo"]);
     Route::delete("product/{id}", [product::class, "deleteProduct"]);
     Route::get("product",[product::class,"search"]);
+    // watch list end points
+    Route::post("watchlist/add",[watchlist::class,"addToWachList"]);
+    
 });
