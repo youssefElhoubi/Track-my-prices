@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\products_history;
 
 class products extends Model
 {
@@ -15,6 +16,6 @@ class products extends Model
         "user_id"
     ];
     public function hestory() {
-        return $this->hasMany("products_history","product_id");
+        return $this->hasMany(products_history::class,"product_id");
     }
 }
