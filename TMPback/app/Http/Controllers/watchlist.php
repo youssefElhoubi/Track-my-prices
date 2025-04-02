@@ -41,7 +41,7 @@ class watchlist extends Controller
             $userId = $request->user_id;
     
             // Fetch the watchlist products directly
-            $watchProducts = Watchlist::where('user_id', $userId)
+            $watchProducts = WatchListM::where('user_id', $userId)
                 ->with('product')
                 ->get()
                 ->pluck('product');
