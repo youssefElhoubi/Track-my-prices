@@ -27,5 +27,6 @@ Route::middleware(["jwtcheck", "isUser"])->group(function () {
     Route::get("product",[product::class,"search"]);
     // watch list end points
     Route::post("watchlist/add",[watchlist::class,"addToWachList"]);
+    Route::get("watchlist",[watchlist::class,"myWatchLits"]);
     
 });

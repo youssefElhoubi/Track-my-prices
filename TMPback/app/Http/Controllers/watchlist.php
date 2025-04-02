@@ -39,13 +39,13 @@ class watchlist extends Controller
     {
         try {
             $userId = $request->user_id;
-    
+
             // Fetch the watchlist products directly
             $watchProducts = WatchListM::where('user_id', $userId)
                 ->with('product')
                 ->get()
                 ->pluck('product');
-    
+
             if ($watchProducts->isEmpty()) {
                 return response()->json([
                     "success" => false,
@@ -53,12 +53,37 @@ class watchlist extends Controller
                     "data" => []
                 ], Response::HTTP_NOT_FOUND);
             }
-    
+
             return response()->json([
                 "success" => true,
                 "message" => "Watchlist retrieved successfully.",
                 "data" => $watchProducts
             ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            return response()->json([
+                "success" => false,
+                "message" => "An error occurred while retrieving the watchlist.",
+                "error" => $th->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+    public function removeFromWtchlist(Request $request)
+    {
+        try {
+            $userId = $request->user_id;
+            $wachedItemID = $request->itemId;
+            $wachedItem = WatchListM::find($wachedItemID);
+            if ($userId !== $wachedItem->user_id) {
+                return response()->json(["message" => "you do not have the right to delete this item"], Response::HTTP_UNAUTHORIZED);
+            }
+
+            $wachedItem->delete();
+
+            return response()->json([
+                "success" => true,
+                "message" => "Item removed from watchlist successfully."
+            ], Response::HTTP_OK);
+
         } catch (\Throwable $th) {
             return response()->json([
                 "success" => false,
