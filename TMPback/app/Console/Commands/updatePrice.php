@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\products;
+use App\Models\products_history;
+use Symfony\Component\Process\Process;
 
 class updatePrice extends Command
 {
@@ -27,6 +29,18 @@ class updatePrice extends Command
     public function handle()
     {
         $products = products::all();
-        
+        foreach ($products as $product) {
+            $url = $product->url;
+            $process = new Process(["node", base_path("nodeScrapers/nodeScraper.js"), $url]);
+            $process->run();
+            $newInfo = json_decode($process->getOutput());
+            $priceDiff =  (($newInfo->data->productPrice - $product->curentPrice) / $product->curentPrice) * 100 ;
+            $product->update(["curentPrice" => $newInfo->data->productPrice]);
+            products_history::created([
+                "product_id" => $product->id,
+                "CurrentPrice"=>$newInfo->data->productPrice,
+                "priceDiff" => $priceDiff
+            ]);
+        }
     }
 }
