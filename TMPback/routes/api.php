@@ -29,6 +29,4 @@ Route::middleware(["jwtcheck", "isUser"])->group(function () {
     Route::post("watchlist/add",[watchlist::class,"addToWachList"]);
     Route::delete("watchlist",[watchlist::class,"removeFromWtchlist"]);
     Route::get("watchlist",[watchlist::class,"myWatchLits"]);
-    
-    
 });

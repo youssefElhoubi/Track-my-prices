@@ -111,7 +111,7 @@ class product extends Controller
             "success" => true,
             "message" => "Product retrieved successfully.",
             "data" => $product,
-            "hestory" => $compairedProducts,
+            "hestory" => $productHestory,
             "compairedProducts" => $compairedProducts
         ], Response::HTTP_OK);
     }
