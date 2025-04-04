@@ -15,19 +15,19 @@
 
       <!-- Body -->
       <div class="p-6">
-        <p class="text-lg text-gray-800 mb-4">Hello {{ $user->name }},</p>
+        <p class="text-lg text-gray-800 mb-4">Hello {{ $detailes["userName"] }},</p>
         <p class="text-gray-700 mb-4">
           The product you’re tracking has dropped in price! 🎉 Here are the details:
         </p>
 
         <div class="bg-gray-100 p-4 rounded-lg mb-6">
-          <p class="text-gray-800"><span class="font-semibold">📦 Product:</span> {{ $product->name }}</p>
-          <p class="text-gray-800"><span class="font-semibold">🛍️ Platform:</span> {{ $product->platformName }}</p>
-          <p class="text-green-600 font-semibold"><span class="font-semibold">💸 New Price:</span> ${{ $newPrice }}</p>
-          <p class="text-red-500"><span class="font-semibold">📉 Dropped By:</span> ${{ $priceDiff }}</p>
+          <p class="text-gray-800"><span class="font-semibold">📦 Product:</span> {{ $detailes["productName"] }}</p>
+          <p class="text-gray-800"><span class="font-semibold">🛍️ Platform:</span> {{ $detailes["platformName"] }}</p>
+          <p class="text-green-600 font-semibold"><span class="font-semibold">💸 New Price:</span> ${{ $detailes["newPrice"] }}</p>
+          <p class="text-red-500"><span class="font-semibold">📉 Dropped By:</span> ${{$detailes["priceDiff"] }}</p>
         </div>
 
-        <a href="{{ $product->url }}" class="inline-block bg-blue-600 text-white px-5 py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
+        <a href="{{$detailes["url"] }}" class="inline-block bg-blue-600 text-white px-5 py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
           View Product
         </a>
       </div>

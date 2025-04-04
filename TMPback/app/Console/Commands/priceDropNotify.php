@@ -41,9 +41,10 @@ class priceDropNotify extends Command
                     "platformName" => $product->name,
                     "productPlatform" => $product->platformName,
                     "newPrice"=>$product->curentPrice,
-                    
+                    "priceDiff"=>$last_product_hestory->priceDiff,
+                    "url"=>$product->id
                 ];
-                Mail::to($productOwner->email)->send(new priceDropMail(""));
+                Mail::to($productOwner->email)->send(new priceDropMail($detailes));
             }
         }
     }
