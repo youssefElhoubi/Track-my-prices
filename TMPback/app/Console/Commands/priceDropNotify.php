@@ -5,7 +5,9 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\products;
 use App\Models\products_history;
-use PhpParser\Node\Stmt\Foreach_;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\priceDropMail;
 
 class priceDropNotify extends Command
 {
@@ -31,7 +33,17 @@ class priceDropNotify extends Command
         $products = products::all();
         foreach ($products as $product) {
             $last_product_hestory = $product->hestory()->latest();
+            $productOwner = User::find($product->user_id);
             if ($product->curentPrice < $last_product_hestory->CurrentPrice) {
+                $detailes = [
+                    "userName" => $productOwner->name,
+                    "productName" => $product->name,
+                    "platformName" => $product->name,
+                    "productPlatform" => $product->platformName,
+                    "newPrice"=>$product->curentPrice,
+                    
+                ];
+                Mail::to($productOwner->email)->send(new priceDropMail(""));
             }
         }
     }
