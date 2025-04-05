@@ -35,18 +35,33 @@ class priceDropNotify extends Command
         foreach ($products as $product) {
             $last_product_hestory = $product->hestory()->latest();
             $productOwner = User::find($product->user_id);
-            $watchers = watchlist::where("product_id","=",$product->id) ;
+            $watchers = watchlist::where('product_id', $product->id)->with('watcher')->get()->pluck('watcher');;
             if ($product->curentPrice < $last_product_hestory->CurrentPrice) {
+                // this part send the notification to the owner 
                 $detailes = [
                     "userName" => $productOwner->name,
                     "productName" => $product->name,
                     "platformName" => $product->name,
                     "productPlatform" => $product->platformName,
-                    "newPrice"=>$product->curentPrice,
-                    "priceDiff"=>$last_product_hestory->priceDiff,
-                    "url"=>$product->id
+                    "newPrice" => $product->curentPrice,
+                    "priceDiff" => $last_product_hestory->priceDiff,
+                    "url" => $product->id
                 ];
                 Mail::to($productOwner->email)->send(new priceDropMail($detailes));
+                // this part send the mail to the watchers 
+                foreach ($watchers as $watcher) {
+                    $watcherMail = $watcher->email;
+                    $detailes = [
+                        "userName" => $watcher->name,
+                        "productName" => $product->name,
+                        "platformName" => $product->name,
+                        "productPlatform" => $product->platformName,
+                        "newPrice" => $product->curentPrice,
+                        "priceDiff" => $last_product_hestory->priceDiff,
+                        "url" => $product->id
+                    ];
+                    Mail::to($watcherMail)->send(new priceDropMail($detailes));
+                }
             }
         }
     }
