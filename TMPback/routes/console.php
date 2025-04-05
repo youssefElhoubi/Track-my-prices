@@ -10,3 +10,4 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 Schedule::command("update-price")->daily();
+schedule::command("price-drop-notify")->dailyAt("04:00");
