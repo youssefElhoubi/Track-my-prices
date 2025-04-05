@@ -8,6 +8,7 @@ use App\Models\products_history;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\priceDropMail;
+use App\Models\watchlist;
 
 class priceDropNotify extends Command
 {
@@ -34,6 +35,7 @@ class priceDropNotify extends Command
         foreach ($products as $product) {
             $last_product_hestory = $product->hestory()->latest();
             $productOwner = User::find($product->user_id);
+            $watchers = watchlist::where("product_id","=",$product->id) ;
             if ($product->curentPrice < $last_product_hestory->CurrentPrice) {
                 $detailes = [
                     "userName" => $productOwner->name,

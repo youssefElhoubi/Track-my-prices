@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class watchlist extends Model
 {
@@ -13,5 +14,8 @@ class watchlist extends Model
     ];
     public function product(){
         return $this->belongsTo(products::class,"product_id");
+    }
+    public function watcher(){
+        return $this->belongsTo(User::class,"user_id");
     }
 }
