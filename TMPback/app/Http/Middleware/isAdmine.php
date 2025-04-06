@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class isUser
+class isAdmine
 {
     /**
      * Handle an incoming request.
@@ -15,7 +15,7 @@ class isUser
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user_role !=="user") {
+        if ($request->user_role !== "admin") {
             return response()->json(["message"=>"you are not AUTHORIZED to this end point"],Response::HTTP_UNAUTHORIZED);
         }
         return $next($request);

@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             "jwtcheck"=> \App\Http\Middleware\JWTvalidate::class,
             "gest"=>\App\Http\Middleware\gest::class,
             "isUser"=>\App\Http\Middleware\isUser::class,
+            "isAdmin"=>\App\Http\Middleware\isAdmine::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

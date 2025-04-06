@@ -6,6 +6,7 @@ use App\Http\Controllers\auth;
 use App\Http\Controllers\scraper;
 use App\Http\Controllers\product;
 use App\Http\Controllers\watchlist;
+use App\Http\Controllers\admin;
 
 // sign up sign in end points
 
@@ -29,4 +30,7 @@ Route::middleware(["jwtcheck", "isUser"])->group(function () {
     Route::post("watchlist/add",[watchlist::class,"addToWachList"]);
     Route::delete("watchlist",[watchlist::class,"removeFromWtchlist"]);
     Route::get("watchlist",[watchlist::class,"myWatchLits"]);
+});
+Route::middleware(["jwtcheck","isAdmin"])->group(function(){
+    Route::get("admin/products",[admin::class,"products"]);
 });
