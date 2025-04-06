@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('user', function (Blueprint $table) {
-            $table->boolean("accountStatus")->default(true);
+        Schema::table('users', function (Blueprint $table) {
+            $table->enum("accountStatus",["active","disactive"])->default("active");
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('user', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->dropColumn("accountStatus");
         });
     }
