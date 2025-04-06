@@ -32,5 +32,6 @@ Route::middleware(["jwtcheck", "isUser"])->group(function () {
     Route::get("watchlist",[watchlist::class,"myWatchLits"]);
 });
 Route::middleware(["jwtcheck","isAdmin"])->group(function(){
-    Route::get("admin/products",[admin::class,"products"]);
+    Route::get("admin/products",[product::class,"productsWithUser"]);
+
 });

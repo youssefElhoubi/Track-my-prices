@@ -156,4 +156,16 @@ class product extends Controller
             'data' => $products
         ], Response::HTTP_OK);
     }
+    public function productsWithUser(Request $request)
+    {
+        $products = Products::with('owner')->get();
+
+        return response()->json(
+            [
+                'success' => true,
+                'data' => $products
+            ],
+            Response::HTTP_OK
+        );
+    }
 }
