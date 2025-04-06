@@ -116,8 +116,10 @@ class product extends Controller
         ], Response::HTTP_OK);
     }
 
-    public function deleteProduct($id)
+    public function deleteProduct(Request $request, $id)
     {
+        $userId = $request->user_id;
+        $userRole = $request->user_role;
         $product = Products::find($id);
 
         if (!$product) {
@@ -126,7 +128,12 @@ class product extends Controller
                 "message" => "Product not found."
             ], Response::HTTP_NOT_FOUND);
         }
-
+        if ($product->user_id != $userId && $userRole != "admine") {
+            return response()->json([
+                "success" => false,
+                "message" => "you are not the owner of this product or you are not the admine"
+            ]);
+        }
         $product->delete();
 
         return response()->json([
