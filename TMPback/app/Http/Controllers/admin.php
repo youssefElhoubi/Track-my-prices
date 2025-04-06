@@ -9,5 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class admin extends Controller
 {
-    
+    public function allUsers(Request $request){
+        $Users = User::all();
+    }
 }
