@@ -34,4 +34,5 @@ Route::middleware(["jwtcheck", "isUser"])->group(function () {
 Route::middleware(["jwtcheck","isAdmin"])->group(function(){
     Route::get("admin/products",[product::class,"productsWithUser"]);
     Route::delete("/admin/products/{id}",[product::class,"deleteProduct"]);
+    Route::patch("/admin/users/{id}/suspend",[admin::class,"bandUser"]);
 });
