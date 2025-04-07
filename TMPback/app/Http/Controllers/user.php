@@ -31,13 +31,13 @@ class user extends Controller
             $nextmount = Carbon::now()->addMonth();
             $exparation_date = "$nextmount->year-$nextmount->month-$nextmount->day ";
             $user->update([
-                "exparation_date"=>$exparation_date
+                "exparation_date" => $exparation_date
             ]);
             return response()->json([
                 'success' => true,
-                'paymentIntent' => $payment
+                'paymentIntent' => $payment,
+                "messge" => "paiment passed with success"
             ]);
-    
         } catch (\Stripe\Exception\CardException $e) {
             // Handle card error
             return response()->json([
