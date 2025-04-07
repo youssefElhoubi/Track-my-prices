@@ -31,7 +31,8 @@ class user extends Controller
             $nextmount = Carbon::now()->addMonth();
             $exparation_date = "$nextmount->year-$nextmount->month-$nextmount->day ";
             $user->update([
-                "exparation_date" => $exparation_date
+                "exparation_date" => $exparation_date,
+                "tier"=>"premium"
             ]);
             return response()->json([
                 'success' => true,

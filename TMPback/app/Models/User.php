@@ -24,7 +24,8 @@ class User extends Authenticatable
         'password',
         'role',
         'tier',
-        "accountStatus"
+        "accountStatus",
+        "exparation_date"
     ];
 
     /**

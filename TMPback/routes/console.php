@@ -11,3 +11,4 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 Schedule::command("update-price")->daily();
 schedule::command("price-drop-notify")->dailyAt("04:00");
+schedule::command("expire-subscreptions")->dailyAt("06:00");
