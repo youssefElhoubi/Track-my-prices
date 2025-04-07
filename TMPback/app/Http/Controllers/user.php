@@ -32,7 +32,7 @@ class user extends Controller
             $exparation_date = "$nextmount->year-$nextmount->month-$nextmount->day ";
             $user->update([
                 "exparation_date" => $exparation_date,
-                "tier"=>"premium"
+                "tier" => "premium"
             ]);
             return response()->json([
                 'success' => true,
