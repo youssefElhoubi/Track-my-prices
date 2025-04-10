@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NotFound from "./components/common/NotFound";
+import LoginPage from "./pages/login";
 
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
     <>
     <BrowserRouter>
     <Routes>
-      <Route path="/"/>
+      <Route path="/" element={<LoginPage/>}/>
       <Route path="*" element={<NotFound/>}/>
     </Routes>
     </BrowserRouter>
