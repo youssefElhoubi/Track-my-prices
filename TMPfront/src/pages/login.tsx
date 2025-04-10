@@ -1,16 +1,13 @@
-"use client"
-
 import type React from "react"
 import { useState } from "react"
 import { EnvelopeIcon, EyeIcon, EyeSlashIcon, ShoppingBagIcon, ArrowRightIcon } from "../components/common/Iconse";
+import { useForm } from "react-hook-form";
 
-export default function LoginPage() {
+const LoginPage: React.FC = () => {
+
+    const { register, formState: { error }, handleSubmit } = useForm();
 
     const [showPassword, setShowPassword] = useState(false)
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
-    }
 
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
@@ -23,7 +20,7 @@ export default function LoginPage() {
                     <p className="text-gray-500 text-sm">Track prices and save money</p>
                 </div>
 
-                <form onSubmit={handleSubmit}>
+                <form>
                     <div className="space-y-6">
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
@@ -34,6 +31,13 @@ export default function LoginPage() {
                                     id="email"
                                     type="email"
                                     placeholder="name@email.com"
+                                    {...register("email",{
+                                        required: "Email is required",
+                                        pattern:{
+                                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                            message: "this form is not acceptable"
+                                        }
+                                    })}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                                     required
                                 />
@@ -52,6 +56,12 @@ export default function LoginPage() {
                                     id="password"
                                     type={showPassword ? "text" : "password"}
                                     placeholder="••••••••"
+                                    {...register("password",{
+                                        pattern:{
+                                            value:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d]).+$/,
+                                            message:"Password must be at least 8 characters long and include at least one letter, one number, and one special character."
+                                        }
+                                    })}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                                     required
                                 />
@@ -129,3 +139,4 @@ export default function LoginPage() {
         </div>
     )
 }
+export default LoginPage;
