@@ -3,11 +3,18 @@ import { useState } from "react"
 import { EnvelopeIcon, EyeIcon, EyeSlashIcon, ShoppingBagIcon, ArrowRightIcon } from "../components/common/Iconse";
 import { useForm } from "react-hook-form";
 
+type LoginForm = {
+    email: string;
+    password: string;
+};
+
 const LoginPage: React.FC = () => {
 
-    const { register, formState: { error }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit } = useForm<LoginForm>();
 
     const [showPassword, setShowPassword] = useState(false)
+
+    
 
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
