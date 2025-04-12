@@ -2,6 +2,7 @@ import type React from "react"
 import { useState } from "react"
 import { EnvelopeIcon, EyeIcon, EyeSlashIcon, ShoppingBagIcon, ArrowRightIcon } from "../components/common/Iconse";
 import { useForm } from "react-hook-form";
+import axiosConfig from "../api/axiosConfig";
 
 type LoginForm = {
     email: string;
@@ -13,6 +14,12 @@ const LoginPage: React.FC = () => {
     const { register, formState: { errors }, handleSubmit } = useForm<LoginForm>();
 
     const [showPassword, setShowPassword] = useState(false)
+
+    const submet = async (info : LoginForm)=>{
+        axiosConfig
+
+        
+    }
 
     
 
