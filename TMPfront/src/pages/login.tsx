@@ -1,8 +1,10 @@
 import type React from "react"
 import { useState } from "react"
-import { EnvelopeIcon, EyeIcon, EyeSlashIcon, ShoppingBagIcon, ArrowRightIcon } from "../components/common/Iconse";
+import { EnvelopeIcon, EyeIcon, EyeSlashIcon, ShoppingBagIcon, ArrowRightIcon, Loading } from "../components/common/Iconse";
 import { useForm } from "react-hook-form";
 import axiosConfig from "../api/axiosConfig";
+import decode from "../actions/decode";
+import { useNavigate } from "react-router-dom";
 
 type LoginForm = {
     email: string;
@@ -10,18 +12,34 @@ type LoginForm = {
 };
 
 const LoginPage: React.FC = () => {
+    const navigator = useNavigate();
 
     const { register, formState: { errors }, handleSubmit } = useForm<LoginForm>();
 
     const [showPassword, setShowPassword] = useState(false)
+    const [loading, setloading] = useState(false)
 
-    const submet = async (info : LoginForm)=>{
-        axiosConfig
 
-        
+    const submet = async (info: LoginForm) => {
+        try {
+            setloading(true);
+            const response = await axiosConfig.post("/auth/signin", info);
+            if (response.status == 201) {
+                const token = response.data.token;
+                const payload = await decode(token);
+                const role = payload.role;
+                if (role == "user") {
+                    navigator("/user");
+                } else if (role == "admine") {
+                    navigator("/admin");
+                }
+            }
+            setloading(false);
+        } catch (error) {
+            setloading(false);
+            console.log(`ther is an error \n ${error}`);
+        }
     }
-
-    
 
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
@@ -34,7 +52,7 @@ const LoginPage: React.FC = () => {
                     <p className="text-gray-500 text-sm">Track prices and save money</p>
                 </div>
 
-                <form>
+                <form onSubmit={handleSubmit(submet)}>
                     <div className="space-y-6">
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
@@ -45,9 +63,9 @@ const LoginPage: React.FC = () => {
                                     id="email"
                                     type="email"
                                     placeholder="name@email.com"
-                                    {...register("email",{
+                                    {...register("email", {
                                         required: "Email is required",
-                                        pattern:{
+                                        pattern: {
                                             value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                                             message: "this form is not acceptable"
                                         }
@@ -70,15 +88,16 @@ const LoginPage: React.FC = () => {
                                     id="password"
                                     type={showPassword ? "text" : "password"}
                                     placeholder="••••••••"
-                                    {...register("password",{
-                                        pattern:{
-                                            value:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d]).+$/,
-                                            message:"Password must be at least 8 characters long and include at least one letter, one number, and one special character."
-                                        }
+                                    {...register("password", {
+                                        // pattern: {
+                                        //     value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d]).+$/,
+                                        //     message: "Password must be at least 8 characters long and include at least one letter, one number, and one special character."
+                                        // }
                                     })}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                                     required
                                 />
+                                {errors.password?.message && <span>{errors.password?.message}</span>}
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
@@ -115,8 +134,14 @@ const LoginPage: React.FC = () => {
                             type="submit"
                             className="w-full flex items-center justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                         >
-                            Sign In
-                            <ArrowRightIcon className="ml-2 h-4 w-4" />
+                            {loading ? (
+                                <Loading className="ml-2 h-4 w-4" />
+                            ) : (
+                                <>
+                                    Sign In
+                                    <ArrowRightIcon className="ml-2 h-4 w-4" />
+                                </>
+                            )}
                         </button>
                     </div>
                 </form>
