@@ -75,20 +75,7 @@ export function EyeSlashIcon({ className }: { className?: string }) {
     )
 }
 
-export function ArrowRightIcon({ className }: { className?: string }) {
-    return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className={className}
-        >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-        </svg>
-    )
-}
+
 export function Loading({ className }: { className?: string }) {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" className={className}>
@@ -96,3 +83,146 @@ export function Loading({ className }: { className?: string }) {
             </circle></svg>
     )
 }
+export function UserIcon({ className }: { className?: string }) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+        >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+    )
+}
+
+export function MailIcon({ className }: { className?: string }) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+        >
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+    )
+}
+
+
+
+export function EyeOffIcon({ className }: { className?: string }) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+        >
+            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+            <line x1="1" y1="1" x2="23" y2="23"></line>
+        </svg>
+    )
+}
+
+export function GoogleIcon({ className }: { className?: string }) {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={className}>
+            <path
+                d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"
+                fill="#4285F4"
+            />
+            <path
+                d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"
+                fill="#4285F4"
+            />
+            <path
+                d="M5.047,14.588C4.615,13.787,4.376,12.871,4.376,12s0.239-1.787,0.671-2.588L2.158,6.824C1.436,8.382,1.028,10.141,1.028,12s0.408,3.618,1.13,5.176L5.047,14.588z"
+                fill="#34A853"
+            />
+            <path
+                d="M12.545,19.791c-2.209,0-4.078-0.724-5.464-1.942L4.192,20.738C6.146,22.794,9.179,24,12.545,24c3.461,0,6.369-1.255,8.479-3.406l-2.939-2.277C16.869,19.327,14.941,19.791,12.545,19.791z"
+                fill="#EA4335"
+            />
+            <path
+                d="M24.001,12c0-0.66-0.057-1.308-0.164-1.938l-0.063-0.374H12.545v3.821h6.992c-0.298,1.379-1.14,2.562-2.258,3.342l2.939,2.277C22.314,17.138,24.001,14.305,24.001,12z"
+                fill="#FBBC05"
+            />
+        </svg>
+    )
+}
+
+export function ArrowRightIcon({ className }: { className?: string }) {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={className}>
+            <path
+                fillRule="evenodd"
+                d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                clipRule="evenodd"
+            />
+        </svg>
+    )
+}
+
+export function Loadingnew({ className }: { className?: string }) {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" className={className}>
+            <radialGradient id="a12" cx=".66" fx=".66" cy=".3125" fy=".3125" gradientTransform="scale(1.5)">
+                <stop offset="0" stopColor="#FFFFFF"></stop>
+                <stop offset=".3" stopColor="#FFFFFF" stopOpacity=".9"></stop>
+                <stop offset=".6" stopColor="#FFFFFF" stopOpacity=".6"></stop>
+                <stop offset=".8" stopColor="#FFFFFF" stopOpacity=".3"></stop>
+                <stop offset="1" stopColor="#FFFFFF" stopOpacity="0"></stop>
+            </radialGradient>
+            <circle
+                transform-origin="center"
+                fill="none"
+                stroke="url(#a12)"
+                strokeWidth="15"
+                strokeLinecap="round"
+                strokeDasharray="200 1000"
+                strokeDashoffset="0"
+                cx="100"
+                cy="100"
+                r="70"
+            >
+                <animateTransform
+                    type="rotate"
+                    attributeName="transform"
+                    calcMode="spline"
+                    dur="2"
+                    values="360;0"
+                    keyTimes="0;1"
+                    keySplines="0 0 1 1"
+                    repeatCount="indefinite"
+                ></animateTransform>
+            </circle>
+            <circle
+                transform-origin="center"
+                fill="none"
+                opacity=".2"
+                stroke="#FFFFFF"
+                strokeWidth="15"
+                strokeLinecap="round"
+                cx="100"
+                cy="100"
+                r="70"
+            ></circle>
+        </svg>
+    )
+}
+
