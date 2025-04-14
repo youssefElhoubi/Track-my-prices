@@ -6,23 +6,28 @@ import { UserIcon, MailIcon, EyeIcon, EyeOffIcon, GoogleIcon, ArrowRightIcon } f
 const SignUpForm = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [profileImage, setProfileImage] = useState(null);
+    const [ProfileImagePreview, setProfileImagePreview] = useState<string | ArrayBuffer | null>("");
 
     //  to handel later
-    // const handleImageChange = (e) => {
-    //     const file = e.target.files[0]
-    //     if (file) {
-    //         setProfileImage(file)
-    //         const reader = new FileReader()
-    //         reader.onloadend = () => {
-    //             setProfileImagePreview(reader.result)
-    //         }
-    //         reader.readAsDataURL(file)
-    //     }
-    // }
+    const handleImageChange = (e: any) => {
+        console.log(e.target.files[0]);
+
+        const file = e.target.files[0]
+        if (file) {
+            setProfileImage(file)
+            const reader = new FileReader()
+            console.log(reader.result);
+            
+            reader.onloadend = () => {
+                setProfileImagePreview(reader.result)
+            }
+            reader.readAsDataURL(file)
+        }
+    }
 
 
     return (
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-md mx-auto">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div className="px-6 py-8">
                     <div className="flex justify-center mb-4">
@@ -54,25 +59,26 @@ const SignUpForm = () => {
                                 Profile Picture
                             </label>
                             <div
-                                className="border-2 border-dashed border-gray-300 rounded-md p-4 text-center cursor-pointer hover:bg-gray-50 transition-colors"
-                            // onClick={() => document.getElementById("profilePicture").click()}
+                                className="border-2 border-dashed border-gray-300 p-4 text-center cursor-pointer hover:bg-gray-50 transition-colors w-[35%] h-32 flex items-center rounded-[50%]"
+                                onClick={() => document.getElementById("profilePicture")?.click()}
                             >
                                 {/* to be ahndeled later */}
-                                {/* {profileImagePreview ? (
+                                {ProfileImagePreview ? (
                                     <div className="flex justify-center">
                                         <img
-                                            src={profileImagePreview || "/placeholder.svg"}
+                                            src={ProfileImagePreview || "/placeholder.svg"}
                                             alt="Profile preview"
                                             className="h-24 w-24 rounded-full object-cover"
                                         />
                                     </div>
                                 ) : (
                                     <p className="text-sm text-gray-500">Click to upload a photo</p>
-                                )} */}
+                                )}
                                 <input
                                     id="profilePicture"
                                     name="profilePicture"
                                     type="file"
+                                    onChange={(e) => { handleImageChange(e) }}
                                     accept="image/*"
                                     className="hidden"
                                 />
