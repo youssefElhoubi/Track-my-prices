@@ -232,9 +232,9 @@ export function Thunder({ className }: { className?: string }) {
             id="Capa_1"
             className={className}
             xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
+            // xmlns:xlink="http://www.w3.org/1999/xlink"
             viewBox="0 0 482.21 482.21"
-            xml:space="preserve"
+            // xml:space="preserve"
             stroke="#ffffff">
             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>

@@ -1,12 +1,12 @@
-"use client"
-
 import { useState } from "react"
 import { UserIcon, MailIcon, EyeIcon, EyeOffIcon, GoogleIcon, Thunder } from "../components/common/Iconse"
+import { useForm } from "react-hook-form";
 
 const SignUpForm = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [profileImage, setProfileImage] = useState(null);
-    const [ProfileImagePreview, setProfileImagePreview] = useState<string | ArrayBuffer | null>("");
+    const [ProfileImagePreview, setProfileImagePreview] = useState<string | null>("");
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
     //  to handel later
     const handleImageChange = (e: any) => {
@@ -17,10 +17,15 @@ const SignUpForm = () => {
             console.log(reader.result);
 
             reader.onloadend = () => {
-                setProfileImagePreview(reader.result)
+                setProfileImagePreview(reader.result);
             }
             reader.readAsDataURL(file)
         }
+    }
+    const submet = async (data: any) => {
+        console.log(data);
+
+
     }
 
 
@@ -37,20 +42,28 @@ const SignUpForm = () => {
                     <h2 className="text-center text-2xl font-bold text-gray-900 mb-1">Join TMP</h2>
                     <p className="text-center text-gray-600 mb-6">Start tracking prices today</p>
 
-                    <form className="space-y-6">
+                    <form className="space-y-6" onSubmit={handleSubmit(submet)}>
                         <div>
                             <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
                                 Full Name
                             </label>
                             <input
                                 id="fullName"
-                                name="fullName"
                                 type="text"
                                 placeholder="John Doe"
+                                {...register("name", {
+                                    required: "Name is required",
+                                    minLength: { value: 5, message: "Minimum 5 characters required" },
+                                    pattern: {
+                                        value: /^[A-Za-z\s]+$/,
+                                        message: "Only letters are allowed",
+                                    },
+                                })}
 
                                 className="appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             />
                         </div>
+                        {errors.name && <span>{errors.name?.message}</span>}
 
                         <div>
                             <label htmlFor="profilePicture" className="block text-sm font-medium text-gray-700 mb-1">
@@ -90,15 +103,22 @@ const SignUpForm = () => {
                             <div className="relative">
                                 <input
                                     id="email"
-                                    name="email"
                                     type="email"
                                     placeholder="name@email.com"
                                     className="appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 pr-10"
+                                    {...register("email", {
+                                        required: "emial is required",
+                                        pattern: {
+                                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                            message: "this form is not acceptable"
+                                        }
+                                    })}
                                 />
                                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                     <MailIcon className="h-5 w-5 text-gray-400" />
                                 </div>
                             </div>
+                            {errors.email && <span>{errors.email?.message}</span> }
                         </div>
 
                         <div>
@@ -108,9 +128,15 @@ const SignUpForm = () => {
                             <div className="relative">
                                 <input
                                     id="password"
-                                    name="password"
                                     type={showPassword ? "text" : "password"}
                                     placeholder="••••••••"
+                                    {...register("password", {
+                                        required: "passwored is required",
+                                        pattern: {
+                                            value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d]).+$/,
+                                            message: "Password must be at least 8 characters long and include at least one letter, one number, and one special character."
+                                        }
+                                    })}
                                     className="appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 pr-10"
                                 />
                                 <button
@@ -125,6 +151,7 @@ const SignUpForm = () => {
                                     )}
                                 </button>
                             </div>
+                            {errors.password && <span>{errors.password?.message}</span> }
 
                         </div>
 
@@ -155,6 +182,8 @@ const SignUpForm = () => {
                             <button
                                 type="submit"
                                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                                onClick={()=>{console.log(errors)}
+                                }
                             >
                                 Create Account
                                 <span className="flex items-center pl-3">
