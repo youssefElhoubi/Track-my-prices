@@ -218,7 +218,7 @@ const SignUpForm = () => {
                 <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 text-center">
                     <p className="text-sm text-gray-600">
                         Already have an account?{" "}
-                        <a href="#" className="font-medium text-blue-600 hover:text-blue-500 transition-colors">
+                        <a href="/login" className="font-medium text-blue-600 hover:text-blue-500 transition-colors">
                             Log in
                         </a>
                     </p>

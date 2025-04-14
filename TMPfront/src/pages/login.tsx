@@ -71,12 +71,12 @@ const LoginPage: React.FC = () => {
                                         }
                                     })}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                                    required
                                 />
                                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                     <EnvelopeIcon className="h-5 w-5 text-gray-400" />
                                 </div>
                             </div>
+                            {errors.email && <span>{errors.email?.message}</span>}
                         </div>
 
                         <div>
@@ -95,9 +95,8 @@ const LoginPage: React.FC = () => {
                                         // }
                                     })}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                                    required
                                 />
-                                {errors.password?.message && <span>{errors.password?.message}</span>}
+                                {errors.password && <span>{errors.password?.message}</span>}
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
@@ -169,7 +168,7 @@ const LoginPage: React.FC = () => {
                 <div className="mt-6 text-center text-sm">
                     <p className="text-gray-600">
                         Don't have an account?{" "}
-                        <a href="#" className="text-blue-500 hover:text-blue-600 font-medium">
+                        <a href="/signup" className="text-blue-500 hover:text-blue-600 font-medium">
                             Sign up now
                         </a>
                     </p>
