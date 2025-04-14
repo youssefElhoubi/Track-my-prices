@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { UserIcon, MailIcon, EyeIcon, EyeOffIcon, GoogleIcon, ArrowRightIcon } from "../components/common/Iconse"
+import { UserIcon, MailIcon, EyeIcon, EyeOffIcon, GoogleIcon, Thunder } from "../components/common/Iconse"
 
 const SignUpForm = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -10,14 +10,12 @@ const SignUpForm = () => {
 
     //  to handel later
     const handleImageChange = (e: any) => {
-        console.log(e.target.files[0]);
-
         const file = e.target.files[0]
         if (file) {
             setProfileImage(file)
             const reader = new FileReader()
             console.log(reader.result);
-            
+
             reader.onloadend = () => {
                 setProfileImagePreview(reader.result)
             }
@@ -159,8 +157,8 @@ const SignUpForm = () => {
                                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
                             >
                                 Create Account
-                                <span className="absolute right-4 inset-y-0 flex items-center pl-3">
-                                    <ArrowRightIcon className="h-5 w-5" />
+                                <span className="flex items-center pl-3">
+                                    <Thunder className="h-5 w-5" />
                                 </span>
                             </button>
                         </div>

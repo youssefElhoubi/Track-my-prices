@@ -225,7 +225,7 @@ export function Loadingnew({ className }: { className?: string }) {
         </svg>
     )
 }
-export function thunder({ className }: { className?: string }) {
+export function Thunder({ className }: { className?: string }) {
     return (
         <svg fill="#ffffff"
             version="1.1"
