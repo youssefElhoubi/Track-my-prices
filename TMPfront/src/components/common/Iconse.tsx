@@ -269,4 +269,11 @@ export function Instagram({ className }: { className?: string }) {
         </svg>
     )
 }
+export function BurgerMenu({ className }: { className?: string }) {
+    return (
+        <svg width="25" height="20" viewBox="0 0 25 20" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+            <path d="M1.73438 2H23.0677M1.73438 10H23.0677M1.73438 18H23.0677" stroke="#4B5563" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    )
+}
 
