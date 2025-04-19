@@ -2,7 +2,7 @@ import type React from "react"
 
 export const ProductCard: React.FC = () => {
     return (
-        <div className="max-w-3xs rounded-xl bg-white shadow-sm border border-gray-100 overflow-hidden">
+        <div className="md:w-80 rounded-xl bg-white shadow-sm border border-gray-100 overflow-hidden">
             <div className="p-4">
                 <div className="bg-gray-100 rounded-lg mb-4 flex items-center justify-center">
                     <img
