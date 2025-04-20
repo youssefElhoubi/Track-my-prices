@@ -7,18 +7,20 @@ import Treanding from '../components/lanign components/treanding'
 import HowItWorks from '../components/lanign components/HowItWork'
 import AboutSection from '../components/lanign components/AboutSection'
 import PricingTiers from '../components/lanign components/PricingTiers'
+import CTABanner from '../components/lanign components/CTABanner'
 
-const LandingPage :React.FC = () => {
+const LandingPage: React.FC = () => {
     return (
         <>
-        <Navbar/>
-        <Herosection/>
-        <WhyTMP/>
-        <Treanding/>
-        <HowItWorks/>  
-        <AboutSection/>
-        <PricingTiers/>
-        <Footer/>
+            <Navbar />
+            <Herosection />
+            <WhyTMP />
+            <Treanding />
+            <HowItWorks />
+            <AboutSection />
+            <PricingTiers />
+            <CTABanner />
+            <Footer />
         </>
     )
 }
