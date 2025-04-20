@@ -6,6 +6,7 @@ import WhyTMP from '../components/lanign components/WhyTMP'
 import Treanding from '../components/lanign components/treanding'
 import HowItWorks from '../components/lanign components/HowItWork'
 import AboutSection from '../components/lanign components/AboutSection'
+import PricingTiers from '../components/lanign components/PricingTiers'
 
 const LandingPage :React.FC = () => {
     return (
@@ -16,6 +17,7 @@ const LandingPage :React.FC = () => {
         <Treanding/>
         <HowItWorks/>  
         <AboutSection/>
+        <PricingTiers/>
         <Footer/>
         </>
     )
