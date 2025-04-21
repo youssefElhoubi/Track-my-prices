@@ -76,6 +76,10 @@ class product extends Controller
             "data" => $products
         ], Response::HTTP_OK);
     }
+    public function tottalProducts(){
+        $totaleProducts = Products::count();
+        return response()->json(["totale"=>$totaleProducts],Response::HTTP_OK);
+    }
 
     public function myProducts(Request $request)
     {
