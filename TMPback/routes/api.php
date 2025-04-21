@@ -36,6 +36,7 @@ Route::middleware(["jwtcheck", "isUser"])->group(function () {
     Route::post("product/scrap", [scraper::class, "scrap"]);
     Route::post("product/add", [product::class, "addProduct"]);
     Route::get("product/all", [product::class, "allProducts"]);
+    Route::get("product/total", [product::class, "tottalProducts"]);
     Route::get("product/own", [product::class, "MyProducts"]);
     Route::get("product/{id}", [product::class, "productInfo"]);
     Route::delete("product/{id}", [product::class, "deleteProduct"]);
