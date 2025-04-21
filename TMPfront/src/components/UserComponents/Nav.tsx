@@ -9,7 +9,7 @@ const Navbar: React.FC = () => {
 
     return (
         <>
-            <div className=" mx-auto px-4 sm:px-6 lg:px-8">
+            <div className=" mx-auto px-4 sm:px-6 lg:px-8 shadow-lg py-2">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo and brand */}
                     <div className="flex items-center">
@@ -73,12 +73,25 @@ const Navbar: React.FC = () => {
                         </button>
                     </div>
                 </div>
+                <div className="flex-1 max-w-md mx-4 md:hidden md:mx-auto">
+                    <div className="relative">
+                        <input
+                            type="text"
+                            placeholder="Search products..."
+                            className="w-full pl-3 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                        />
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                            <Search className="h-5 w-5 text-gray-400" />
+                        </div>
+                    </div>
+                </div>
             </div>
 
             {/* Mobile menu */}
             {isMenuOpen && (
                 <ProfileDropdown />
             )}
+
         </>
     )
 }
