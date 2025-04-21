@@ -26,8 +26,10 @@ const LoginPage: React.FC = () => {
             const response = await axiosConfig.post("/auth/signin", info);
             if (response.status == 201) {
                 const token = response.data.token;
+                localStorage.setItem("token",token);
                 const payload = await decode(token);
-                const role = payload.role;
+                const role = payload.data.role;
+                console.log(role);
                 if (role == "user") {
                     navigator("/user");
                 } else if (role == "admine") {
@@ -48,7 +50,7 @@ const LoginPage: React.FC = () => {
                     <div className="bg-blue-500 rounded-full p-4 mb-4">
                         <ShoppingBagIcon className="h-6 w-6 text-white" />
                     </div>
-                    <h1 className="text-2xl font-bold text-gray-900">Welcome Back</h1>
+                    <h1 className="text-2xl font-bold text-gray-900">Welcome Back </h1>
                     <p className="text-gray-500 text-sm">Track prices and save money</p>
                 </div>
 
