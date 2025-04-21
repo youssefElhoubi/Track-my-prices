@@ -1,4 +1,5 @@
-import type React from "react"
+import  React from "react"
+import signOut from "../../api/logOut" ;
 import { User, LogOut, Bookmark } from "lucide-react"
 
 const ProfileDropdown: React.FC = () => {
@@ -26,10 +27,10 @@ const ProfileDropdown: React.FC = () => {
                         Watchlist
                     </a>
 
-                    <a href="#" className="flex items-center px-4 py-2 text-sm text-red-500 hover:bg-gray-100">
+                    <button onClick={signOut} className="flex items-center px-4 py-2 text-sm text-red-500 hover:bg-gray-100">
                         <LogOut className="h-4 w-4 mr-2" />
                         Logout
-                    </a>
+                    </button>
                 </div>
         </div>
     )
