@@ -23,7 +23,7 @@ const Privet: React.FC<Props> = ({ Componnet }) => {
 
         const validateToken = async () => {
             try {
-                const response = await fetch("http://peapirineV2.test/api/token/validate", {
+                const response = await fetch("http://tmpback.test/api/decode", {
                     method: "POST",
                     headers: {
                         Accept: "application/json",
@@ -39,6 +39,7 @@ const Privet: React.FC<Props> = ({ Componnet }) => {
 
         validateToken();
     }, [token]);
+    console.log(isAuth);
 
     if (isAuth === null) return <div>Loading...</div>;
 

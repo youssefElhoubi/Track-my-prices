@@ -26,9 +26,9 @@ const Navbar :React.FC = () => {
             <SideBar isOpen={open}/>
             <div className="hidden md:flex items-center space-x-6 text-sm text-gray-700">
                 <a href="#" className="hover:text-black">About</a>
-                <a href="#" className="hover:text-black">Log In</a>
+                <a href="/login" className="hover:text-black">Log In</a>
                 <a
-                    href="#"
+                    href="/signup"
                     className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-md text-sm"
                 >
                     Sign Up
