@@ -1,13 +1,15 @@
-import React ,{ useState } from "react"
+import React, { useState } from "react"
 import logo from "../../assets/TMPlogo.png"
-import { Search, User, Bookmark, Menu, X } from "lucide-react"
+import { Menu, X } from "lucide-react";
+import { Search, Bookmark, User, DownArrow } from "../common/Iconse";
+import ProfileDropdown from "./ProfileDropdown";
 
 const Navbar: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     return (
-        <header className="border-b border-blue-500">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <>
+            <div className=" mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo and brand */}
                     <div className="flex items-center">
@@ -56,13 +58,9 @@ const Navbar: React.FC = () => {
                                 <User className="h-5 w-5 text-white" />
                             </div>
                             <div className="ml-1 hidden md:block">
-                                <svg className="h-4 w-4 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
+                                <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                                    <DownArrow />
+                                </button>
                             </div>
                         </div>
 
@@ -79,40 +77,9 @@ const Navbar: React.FC = () => {
 
             {/* Mobile menu */}
             {isMenuOpen && (
-                <div className="md:hidden">
-                    <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                        <a
-                            href="#"
-                            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50"
-                        >
-                            Home
-                        </a>
-                        <a
-                            href="#"
-                            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50"
-                        >
-                            My Products
-                        </a>
-                        <a
-                            href="#"
-                            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50"
-                        >
-                            Watchlist
-                        </a>
-                        <div className="relative mt-3">
-                            <input
-                                type="text"
-                                placeholder="Search products..."
-                                className="w-full pl-3 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                            />
-                            <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-                                <Search className="h-5 w-5 text-gray-400" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <ProfileDropdown />
             )}
-        </header>
+        </>
     )
 }
 
