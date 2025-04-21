@@ -26,7 +26,8 @@ class auth extends Controller
             $user = User::create([
                 'name' => $req->name,
                 'email' => $req->email,
-                'password' => Hash::make($req->password)
+                'password' => Hash::make($req->password),
+                "Image_url"=>$req->Image_url
             ]);
             $expirationTime = time() + 3600;
             $payload = [

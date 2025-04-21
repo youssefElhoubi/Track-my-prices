@@ -1,31 +1,53 @@
 import { useState } from "react"
 import { UserIcon, MailIcon, EyeIcon, EyeOffIcon, GoogleIcon, Thunder } from "../components/common/Iconse"
 import { useForm } from "react-hook-form";
+import UploadImage from "../api/Cloudinary";
+import axiosConfig from "../api/axiosConfig";
+import { useNavigate } from "react-router-dom";
 
 const SignUpForm = () => {
+    const navigator = useNavigate();
+
+    type SignUpForm = {
+        name: string
+        email: string
+        passwored: string
+    }
     const [showPassword, setShowPassword] = useState(false);
-    const [profileImage, setProfileImage] = useState(null);
-    const [ProfileImagePreview, setProfileImagePreview] = useState<string | null>("");
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [profileImage, setProfileImage] = useState("https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png");
+    const [ProfileImagePreview, setProfileImagePreview] = useState<string | ArrayBuffer | null>("");
+    const [afterSubmit, setafterSubmit] = useState<any>("");
+    const { register, handleSubmit, formState: { errors } } = useForm<SignUpForm>();
 
     //  to handel later
-    const handleImageChange = (e: any) => {
+    const handleImageChange = async (e: any) => {
         const file = e.target.files[0]
+        if (!file) return
         if (file) {
-            setProfileImage(file)
             const reader = new FileReader()
-            console.log(reader.result);
-
+            // console.log(reader.result);
             reader.onloadend = () => {
                 setProfileImagePreview(reader.result);
             }
             reader.readAsDataURL(file)
+            const imageUrl = await UploadImage(file);
+            setProfileImage(imageUrl);
         }
     }
     const submet = async (data: any) => {
-        console.log(data);
-
-
+        try {
+            if (profileImage) {
+                data = { ...data, Image_url: profileImage }
+            }
+            console.log(data);
+            const response = await axiosConfig.post("/auth/signup", data);
+            localStorage.setItem("token", response.data.token);
+            navigator("/user");
+        } catch (error: any) {
+            console.log(error.response.data);
+            const errors = { emailError: error.data.email }
+            setafterSubmit(errors)
+        }
     }
 
 
@@ -118,7 +140,7 @@ const SignUpForm = () => {
                                     <MailIcon className="h-5 w-5 text-gray-400" />
                                 </div>
                             </div>
-                            {errors.email && <span>{errors.email?.message}</span> }
+                            {errors.email && <span>{errors.email?.message}</span>}
                         </div>
 
                         <div>
@@ -151,7 +173,7 @@ const SignUpForm = () => {
                                     )}
                                 </button>
                             </div>
-                            {errors.password && <span>{errors.password?.message}</span> }
+                            {errors.password && <span>{errors.password?.message}</span>}
 
                         </div>
 
@@ -182,8 +204,6 @@ const SignUpForm = () => {
                             <button
                                 type="submit"
                                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
-                                onClick={()=>{console.log(errors)}
-                                }
                             >
                                 Create Account
                                 <span className="flex items-center pl-3">
@@ -214,6 +234,7 @@ const SignUpForm = () => {
                         </div>
                     </div>
                 </div>
+                {afterSubmit && <span>{afterSubmit.errors}</span>}
 
                 <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 text-center">
                     <p className="text-sm text-gray-600">

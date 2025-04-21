@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'Image_url',
         'role',
         'tier',
         "accountStatus",
@@ -50,7 +51,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function watchList(){
+    public function watchList()
+    {
         return $this->hasMany(watchlist::class, "user_id");
     }
 }
