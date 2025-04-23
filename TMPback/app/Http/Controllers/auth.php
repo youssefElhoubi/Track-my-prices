@@ -81,4 +81,14 @@ class auth extends Controller
             return response()->json(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
         }
     }
+    public function passworedChange(Request $request,int $id){
+        try {
+            $user = User::find($id);
+            $user->password = $request->password;
+            $user->save();
+            return response()->json(["message"=>"passwoed have been change successful"],Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            return response()->json(["error"=>$th->getMessage()],Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
