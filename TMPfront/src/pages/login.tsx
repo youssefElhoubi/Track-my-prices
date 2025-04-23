@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 type LoginForm = {
     email: string;
-    password: string;
+    password: string
 };
 
 const LoginPage: React.FC = () => {
