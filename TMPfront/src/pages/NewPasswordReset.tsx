@@ -7,9 +7,11 @@ import { useForm } from "react-hook-form";
 import BackToLoginNav from "../components/common/BackToLoginNav";
 import { useParams } from "react-router-dom";
 import axiosConfig from "../api/axiosConfig";
+import { useNavigate } from "react-router-dom";
+import { Loading } from "../components/common/Iconse";
 
 type data = {
-    password: string,
+    password: string
     confirmPassword: string
 }
 
@@ -19,6 +21,7 @@ const NewPasswordReset: React.FC = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [password, setPassword] = useState("");
     const [loading, setloading] = useState(false);
+    const navigation = useNavigate();
 
     const { id } = useParams();
 
@@ -32,6 +35,7 @@ const NewPasswordReset: React.FC = () => {
             const response = await axiosConfig.patch(`auth/passwored/change/${id}`, { password });
             console.log(response);
             setloading(false)
+            navigation("/login");
         } catch (error) {
             console.log(error);
             setloading(false)
