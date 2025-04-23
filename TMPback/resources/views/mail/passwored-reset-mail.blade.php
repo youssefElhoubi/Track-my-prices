@@ -15,7 +15,7 @@
                         Hello, <br>
                         We received a request to reset your password. Click the button below to create a new password.
                     </p>
-                    <a href="http://tmpback.test/api/auth/passwored/change/{{$detailes['id']}}" style="background-color: #007bff; color: #ffffff; text-decoration: none; padding: 12px 24px; font-size: 16px; font-weight: bold; border-radius: 6px; display: inline-block; margin: 20px 0;">Reset Password</a>
+                    <a href="http://localhost:5173/changepasswored/{{$detailes['id']}}" style="background-color: #007bff; color: #ffffff; text-decoration: none; padding: 12px 24px; font-size: 16px; font-weight: bold; border-radius: 6px; display: inline-block; margin: 20px 0;">Reset Password</a>
                     <p style="color: #666; font-size: 14px;">If you didn't request this, you can safely ignore this email.</p>
                 </td>
             </tr>

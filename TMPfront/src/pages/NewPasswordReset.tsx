@@ -5,6 +5,8 @@ import { useState } from "react"
 import { Lock, Eye, EyeOff } from "lucide-react"
 import { useForm } from "react-hook-form";
 import BackToLoginNav from "../components/common/BackToLoginNav";
+import { useParams } from "react-router-dom";
+import axiosConfig from "../api/axiosConfig";
 
 type data = {
     password: string,
@@ -16,9 +18,25 @@ const NewPasswordReset: React.FC = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [password, setPassword] = useState("");
+    const [loading, setloading] = useState(false);
+
+    const { id } = useParams();
 
 
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit } = useForm<data>();
+
+    const submithData = async (data: data) => {
+        try {
+            setloading(true)
+            const { password } = data;
+            const response = await axiosConfig.patch(`auth/passwored/change/${id}`, { password });
+            console.log(response);
+            setloading(false)
+        } catch (error) {
+            console.log(error);
+            setloading(false)
+        }
+    }
 
     return (
         <div className="min-h-screen bg-white">
@@ -38,7 +56,7 @@ const NewPasswordReset: React.FC = () => {
                         <h2 className="mt-6 text-center text-2xl font-bold text-gray-900">Reset Your Password</h2>
                         <p className="mt-2 text-center text-sm text-gray-600">Create a new password for your account</p>
 
-                        <form className="mt-8 space-y-6" onSubmit={handleSubmit(() => { })}>
+                        <form className="mt-8 space-y-6" onSubmit={handleSubmit(submithData)}>
                             {/* New Password Field */}
                             <div>
                                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">
@@ -58,7 +76,6 @@ const NewPasswordReset: React.FC = () => {
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                         className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                        required
                                     />
                                     <button
                                         type="button"
@@ -84,12 +101,11 @@ const NewPasswordReset: React.FC = () => {
                                     <input
                                         id="confirmPassword"
                                         type={showConfirmPassword ? "text" : "password"}
-                                        {...register("confirmPassword",{
-                                            required:"password is required" ,
-                                            validate:(value)=> value === password || "passwords not matching"
+                                        {...register("confirmPassword", {
+                                            required: "password is required",
+                                            validate: (value) => value === password || "passwords not matching"
                                         })}
                                         className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                        required
                                     />
                                     <button
                                         type="button"
@@ -111,7 +127,14 @@ const NewPasswordReset: React.FC = () => {
                                     type="submit"
                                     className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                                 >
-                                    Reset Password
+                                    {loading ? (
+                                        <Loading className="ml-2 h-4 w-4" />
+                                    ) : (
+                                        <>
+                                            Send Reset Link
+
+                                        </>
+                                    )}
                                 </button>
                             </div>
                         </form>
