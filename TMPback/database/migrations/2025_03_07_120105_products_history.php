@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("product_id");
             $table->foreign("product_id")->references("id")->on("products")->onDelete("cascade");            
-            $table->float("CurrentPrice");
+            $table->string("CurrentPrice");
             $table->float("priceDiff");
             $table->timestamps();
         });

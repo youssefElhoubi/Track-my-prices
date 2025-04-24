@@ -51,6 +51,7 @@ const scrapAmazon = async (url) => {
             console.log(JSON.stringify({ error: "Product price is missing", code: 404 }));
             return;
         }
+        holePrice = holePrice.replace("$","");
 
         // Scrape product image
         let productImage;

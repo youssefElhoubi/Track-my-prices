@@ -32,7 +32,7 @@ class auth extends Controller
             $expirationTime = time() + 3600;
             $payload = [
                 'sub' => $user->id,
-                'role' => $user->role,
+                'role' => "user",
                 'iat' => time(),
                 'exp' => $expirationTime,
             ];
@@ -50,7 +50,10 @@ class auth extends Controller
                 'password' => 'required|string|min:8',
             ]);
             $user = User::where("email", "=", $req->email)->first();
-            if (!Hash::check($req->password, $user->password, )) {
+            if (!$user) {
+                return response()->json(["error"=>"something is wrong "],Response::HTTP_NOT_FOUND);
+            }
+            if (!Hash::check($req->password, $user->password )) {
                 return response()->json(["message" => "something is wrong"], Response::HTTP_BAD_REQUEST);
             }
             $expirationTime = time() + 3600;

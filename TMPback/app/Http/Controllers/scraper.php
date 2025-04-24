@@ -15,11 +15,12 @@ class scraper extends Controller
         $process->run();
         $scrapedData = json_decode($process->getOutput());
         // return response()->json($scrapedData);
+        return response()->json([ $scrapedData->data]);
         if ($scrapedData->code === 200) {
             return response()->json([
-                "producttitle" => $scrapedData->data->title,
-                "productImage" => $scrapedData->data->image,
-                "productPrice" => $scrapedData->data->fullPrice,
+                "producttitle" => $scrapedData->data->productTitle,
+                "productImage" => $scrapedData->data->productImage,
+                "productPrice" => $scrapedData->data->holePrice,
                 "productPlatform" => $scrapedData->data->platformName
             ], $scrapedData->code);
         } else if ($scrapedData->code === 404 || 500) {

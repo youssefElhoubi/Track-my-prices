@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("url");
             $table->string("name");
-            $table->float("curentPrice");
+            $table->string("curentPrice");
             $table->string("platformName");
             $table->unsignedBigInteger("user_id");
             $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");
