@@ -52,28 +52,33 @@ type Link = {
 
 type ProductsStorType = {
     response: PageProducts | null;
-    loading: boolean;
+    isloading: boolean;
     error: string | null;
-    fetchProducts: () => Promise<void>;
+    fetchProducts: (token: string) => Promise<void>;
 };
 
-export const ProductsStor = create<ProductsStorType>((set) => ({
+const ProductsStor = create<ProductsStorType>((set) => ({
     response: null,
-    loading: false,
+    isloading: false,
     error: null,
-    fetchProducts: async () => {
-        set({ loading: true, error: null });
+    fetchProducts: async (token: string) => {
+        set({ isloading: true, error: null });
         try {
-            const res = await axiosConfig.get("/products");
+            const res = await axiosConfig.get("product/all", {
+                headers: {
+                    Authorization: token
+                }
+            });
             set({
                 response: res.data,
-                loading: false,
+                isloading: false,
             });
         } catch (err) {
             set({
                 error: "Failed to fetch products",
-                loading: false,
+                isloading: false,
             });
         }
     },
 }));
+export default ProductsStor
