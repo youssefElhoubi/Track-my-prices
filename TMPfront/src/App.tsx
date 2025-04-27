@@ -4,6 +4,7 @@ import LoginPage from "./pages/login";
 import SignUpForm from "./pages/signup";
 import LandingPage from "./pages/LandingPage";
 import UserHome from "./pages/User/UserHome";
+import TraceNewProduct from "./pages/User/TraceNewProduct";
 import Privet from "./protected/Privet";
 import ResetPassword from "./pages/ResetPassword";
 import NewPasswordReset from "./pages/NewPasswordReset";
@@ -24,6 +25,7 @@ function App() {
           <Route path="/changepasswored/:id" element={<NewPasswordReset />} />
           {/* after log in  */}
           <Route path="/user" element={<Privet Componnet={UserHome} />} />
+          <Route path="/test" element={<TraceNewProduct />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

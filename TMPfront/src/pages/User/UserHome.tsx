@@ -5,6 +5,7 @@ import ProductCard from '../../components/product/ProductCard';
 import ProductsStor from '../../stor/ProductsStore';
 import { Loading } from "../../components/common/Iconse";
 import UserProductCard from "../../components/product/UserProductCard";
+import Footer from '../../components/lanign components/Footer';
 
 const UserHome: React.FC = () => {
     const [data, setdata] = useState<any>("");
@@ -32,7 +33,7 @@ const UserHome: React.FC = () => {
                             {response?.data?.data?.map(ele => {
                                 return (
                                     <div key={ele.id}>
-                                        <UserProductCard id={ele.id} url={ele.url} name={ele.name} curentPrice={ele.curentPrice} platformName={ele.platformName} user_id={ele.user_id} created_at={ele.created_at} updated_at={ele.updated_at} productImage={ele.productImage} hestory={ele.hestory}/>
+                                        <UserProductCard id={ele.id} url={ele.url} name={ele.name} curentPrice={ele.curentPrice} platformName={ele.platformName} user_id={ele.user_id} created_at={ele.created_at} updated_at={ele.updated_at} productImage={ele.productImage} hestory={ele.hestory} />
                                     </div>
                                 )
                             })}
@@ -43,6 +44,8 @@ const UserHome: React.FC = () => {
                         </div>
                     )
             }
+
+            <Footer />
 
         </>
     )
