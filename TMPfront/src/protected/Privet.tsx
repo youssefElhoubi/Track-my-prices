@@ -39,7 +39,6 @@ const Privet: React.FC<Props> = ({ Componnet }) => {
 
         validateToken();
     }, [token]);
-    console.log(isAuth);
 
     if (isAuth === null) return <div>Loading...</div>;
 

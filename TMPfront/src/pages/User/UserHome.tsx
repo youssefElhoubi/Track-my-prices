@@ -4,6 +4,7 @@ import Allproducts from '../../components/UserComponents/Allproducts';
 import ProductCard from '../../components/product/ProductCard';
 import ProductsStor from '../../stor/ProductsStore';
 import { Loading } from "../../components/common/Iconse";
+import UserProductCard from "../../components/product/UserProductCard";
 
 const UserHome: React.FC = () => {
     const [data, setdata] = useState<any>("");
@@ -15,9 +16,8 @@ const UserHome: React.FC = () => {
         }
     }, [])
     // setdata(response?.data.data);
-    console.log(response);
-    
-    
+    // console.log(response);
+
     return (
         <>
             <Navbar />
@@ -29,7 +29,13 @@ const UserHome: React.FC = () => {
                 isloading ? <Loading /> :
                     (
                         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-12 '>
-                            <ProductCard />
+                            {response?.data?.data?.map(ele => {
+                                return (
+                                    <div key={ele.id}>
+                                        <UserProductCard id={ele.id} url={ele.url} name={ele.name} curentPrice={ele.curentPrice} platformName={ele.platformName} user_id={ele.user_id} created_at={ele.created_at} updated_at={ele.updated_at} productImage={ele.productImage} hestory={ele.hestory}/>
+                                    </div>
+                                )
+                            })}
                             <ProductCard />
                             <ProductCard />
                             <ProductCard />

@@ -1,6 +1,6 @@
 import type React from "react"
 
-export const ProductCard: React.FC = () => {
+const ProductCard: React.FC = () => {
     return (
         <div className="md:w-80 rounded-xl bg-white shadow-sm border border-gray-100 overflow-hidden">
             <div className="p-4">
