@@ -6,6 +6,7 @@ import Navbar from "../../components/UserComponents/Nav"
 import ScrapedProductInof from "../../components/product/ScrapedProductInof"
 import { useForm } from "react-hook-form";
 import axiosConfig from "../../api/axiosConfig";
+import ScrapedProductError from "../../components/product/ScrapedProductError";
 
 
 
@@ -13,8 +14,16 @@ const TraceNewProduct: React.FC = () => {
     type url = {
         url: string
     }
+    type product = {
+        productTitle: string
+        holePrice: number
+        productImage: string
+        platformName: string
+        url: string;
+    };
 
     const [isAnalyzed, setIsAnalyzed] = useState(false)
+    const [Product, SetProduct] = useState<product>();
     const [token, setToken] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
@@ -35,12 +44,13 @@ const TraceNewProduct: React.FC = () => {
                     Authorization: token
                 }
             });
-            console.log(response);
+            let ProductInfo = response.data[0];
+            ProductInfo.url = data.url;
+            SetProduct(ProductInfo);
         } catch (error) {
             console.log(error);
         }
-        setIsLoading(false)
-
+        setIsLoading(false);
     }
 
     return (
@@ -112,6 +122,7 @@ const TraceNewProduct: React.FC = () => {
                         {isAnalyzed && (
                             <ScrapedProductInof title={""} image={""} price={""} Platform={""} url={""} />
                         )}
+                        <ScrapedProductError message={"gsdkjfgskjgfskagfksagfkjgakdfgskdgsgdofiugailjdg;ap9sddgbapoihsbvcpih;absdvc"} />
                     </div>
                 </div>
             </div>
