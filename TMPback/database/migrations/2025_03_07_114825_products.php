@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string("name");
             $table->string("curentPrice");
             $table->string("platformName");
+            $table->string("productImage");
             $table->unsignedBigInteger("user_id");
             $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");
             $table->timestamps();
