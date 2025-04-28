@@ -4,16 +4,17 @@ import Navbar from "../../components/UserComponents/Nav"
 import Footer from "../../components/lanign components/Footer"
 import { useParams } from "react-router-dom"
 import { ProductInfo } from "../../api/getProductInfo"
+import ProductCurrentInfo from "../../components/product/product Detailes/ProductCurrentInfo"
+import PriceChart from "../../components/product/product Detailes/PriceChart"
 
 type Root = {
     success: boolean
     message: string
     data: Data
     hestory: Hestory[]
-    compairedProducts: any
-} 
+}
 
-type Data ={
+type Data = {
     id: number
     url: string
     name: string
@@ -26,7 +27,7 @@ type Data ={
     hestory: Hestory[]
 }
 
-type Hestory ={
+type Hestory = {
     id: number
     product_id: number
     CurrentPrice: string
@@ -40,13 +41,49 @@ const ProductDetailPage: React.FC = () => {
     const [alertThreshold, setAlertThreshold] = useState("")
     const [notifyOnDrop, setNotifyOnDrop] = useState(false)
     const [activeTab, setActiveTab] = useState("7D");
-    const [productInfo, setProductInfo]= useState<Root>();
+    const [productInfo, setProductInfo] = useState<Root>({
+        success: true,
+        message: "Product retrieved successfully.",
+        data: {
+            id: 1,
+            url: "https://www.amazon.com/ASUS-Display-NVIDIA%C2%AE-i7-13650HX-G614JV-AS74/dp/B0CRDCXRK2/ref=sr_1_1?_encoding=UTF8&sr=8-1",
+            name: "ASUS ROG Strix G16 Gaming Laptop, 165Hz Display, NVIDIA® GeForce RTX™ 4060, Intel Core i7-13650HX, 16GB DDR5, 1TB PCIe Gen4 SSD, Wi-Fi 6E, Windows 11, G614JV-AS74",
+            curentPrice: "1,323.83",
+            platformName: "Amazon",
+            user_id: 3,
+            created_at: "2025-04-24T10:41:05.000000Z",
+            updated_at: "2025-04-24T10:41:05.000000Z",
+            productImage: "https://m.media-amazon.com/images/I/81GrCeuCzxL._AC_SX355_.jpg",
+            hestory: [
+                {
+                    id: 1,
+                    product_id: 1,
+                    CurrentPrice: "1,323.83",
+                    priceDiff: 0,
+                    created_at: "2025-04-24T10:41:06.000000Z",
+                    updated_at: "2025-04-24T10:41:06.000000Z"
+                }
+            ]
+        },
+        hestory: [
+            {
+                id: 1,
+                product_id: 1,
+                CurrentPrice: "1,323.83",
+                priceDiff: 0,
+                created_at: "2025-04-24T10:41:06.000000Z",
+                updated_at: "2025-04-24T10:41:06.000000Z"
+            }
+        ],
+    });
     const { id } = useParams();
     useEffect(() => {
         const getInfo = async () => {
             const token = localStorage.getItem("token");
             if (token) {
                 const response = await ProductInfo(id, token);
+                console.log(response);
+
                 setProductInfo(response?.data)
             }
         }
@@ -64,60 +101,12 @@ const ProductDetailPage: React.FC = () => {
                 <main className="flex-grow">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                         <div className=" rounded-lg overflow-hidden">
-                            <div className="p-6 flex justify-between">
+                            <div className="p-6 flex justify-between flex-wrap">
                                 {/* Product Header */}
                                 <div>
-                                    <div className="flex flex-col md:flex-row md:items-start md:justify-between">
-                                        <div className="flex flex-col md:flex-row md:items-center">
-                                            <div className="w-24 h-24 md:w-32 md:h-32 bg-gray-100 rounded-md overflow-hidden mb-4 md:mb-0 md:mr-6 flex-shrink-0">
-                                                <img
-                                                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Po7CxlkSGrLZ3DJAZhOnnCwxZT1iLX.png"
-                                                    alt="Wireless Noise-Canceling Headphones"
-                                                    className="w-full h-full object-contain"
-                                                />
-                                            </div>
-                                            <h1 className="text-xl md:text-2xl font-bold text-gray-900">Wireless Noise-Canceling Headphones</h1>
-                                        </div>
-
-                                        <div className="mt-4 md:mt-0 text-right">
-                                            <div className="text-2xl md:text-3xl font-bold text-green-600">$249.99</div>
-                                            <div className="text-sm text-gray-600">
-                                                Current Price · <span className="text-green-600">-15% from $294.99</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
+                                    <ProductCurrentInfo title={productInfo?.data.name} price={productInfo?.data.curentPrice} image={productInfo?.data.productImage} priceDrop={""} />
                                     {/* Price History */}
-                                    <div className="mt-8">
-                                        <h2 className="text-lg font-medium text-gray-900 mb-4">Price History</h2>
-                                        <div className="flex space-x-2 mb-4">
-                                            <button
-                                                className={`px-3 py-1 rounded-md text-sm font-medium ${activeTab === "7D" ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-700"
-                                                    }`}
-                                                onClick={() => setActiveTab("7D")}
-                                            >
-                                                7D
-                                            </button>
-                                            <button
-                                                className={`px-3 py-1 rounded-md text-sm font-medium ${activeTab === "30D" ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-700"
-                                                    }`}
-                                                onClick={() => setActiveTab("30D")}
-                                            >
-                                                30D
-                                            </button>
-                                            <button
-                                                className={`px-3 py-1 rounded-md text-sm font-medium ${activeTab === "1Y" ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-700"
-                                                    }`}
-                                                onClick={() => setActiveTab("1Y")}
-                                            >
-                                                1Y
-                                            </button>
-                                        </div>
-                                        <div className="bg-gray-50 rounded-lg p-4 h-48 flex items-center justify-center text-gray-500 text-sm">
-                                            Price chart will load here
-                                        </div>
-                                    </div>
+                                    <PriceChart history={productInfo?.data.hestory}/>
 
                                     {/* Platform Comparison */}
                                     <div className="mt-8">
