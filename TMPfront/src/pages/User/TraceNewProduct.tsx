@@ -1,6 +1,6 @@
 import type React from "react";
 import { useState, useEffect } from "react";
-import { Search, Link, Check } from "lucide-react";
+import { Search, Link } from "lucide-react";
 import { } from "../../components/common/Iconse";
 import Navbar from "../../components/UserComponents/Nav"
 import ScrapedProductInof from "../../components/product/ScrapedProductInof"
@@ -22,7 +22,7 @@ const TraceNewProduct: React.FC = () => {
         url: string;
     };
 
-    const [isAnalyzed, setIsAnalyzed] = useState(false)
+    const [error, setError] = useState(false)
     const [Product, SetProduct] = useState<product>();
     const [token, setToken] = useState("")
     const [isLoading, setIsLoading] = useState(false)
@@ -37,6 +37,7 @@ const TraceNewProduct: React.FC = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<url>();
 
     const handleAnalyze = async (data: url) => {
+        setError(false);
         setIsLoading(true)
         try {
             const response = await axiosConfig.post("product/scrap", data, {
@@ -49,6 +50,7 @@ const TraceNewProduct: React.FC = () => {
             SetProduct(ProductInfo);
         } catch (error) {
             console.log(error);
+            setError(true);
         }
         setIsLoading(false);
     }
@@ -118,11 +120,10 @@ const TraceNewProduct: React.FC = () => {
                             </form>
                         </div>
 
-
-                        {isAnalyzed && (
-                            <ScrapedProductInof title={""} image={""} price={""} Platform={""} url={""} />
+                        {Product && (
+                            <ScrapedProductInof title={Product.productTitle} image={Product.productImage} price={Product.holePrice} Platform={Product.platformName} url={Product.url} />
                         )}
-                        <ScrapedProductError message={"gsdkjfgskjgfskagfksagfkjgakdfgskdgsgdofiugailjdg;ap9sddgbapoihsbvcpih;absdvc"} />
+                        {error && <ScrapedProductError message={""} />}
                     </div>
                 </div>
             </div>
