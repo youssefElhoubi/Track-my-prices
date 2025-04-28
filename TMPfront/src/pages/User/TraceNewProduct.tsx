@@ -57,7 +57,6 @@ const TraceNewProduct: React.FC = () => {
 
     return (
         <>
-
             <Navbar />
             <div className="min-h-screen bg-gray-50 py-8 px-4">
                 <div className="max-w-md mx-auto bg-white rounded-xl shadow-sm overflow-hidden p-6 sm:p-8">
