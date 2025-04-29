@@ -23,7 +23,7 @@ class watchlist extends Controller
                 ->exists();
             if ($exists) {
                 return response()->json([
-                    "status" => "exists",
+                    "status" => true,
                     "message" => "This product is already in your watch list."
                 ], 409);
             }
@@ -33,7 +33,7 @@ class watchlist extends Controller
             ]);
             return response()->json(
                 [
-                    "status" => "success",
+                    "status" => false,
                     "message" => "a new item have been added to your watch list"
                 ],
                 Response::HTTP_CREATED

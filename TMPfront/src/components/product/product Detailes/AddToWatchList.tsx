@@ -1,33 +1,57 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Plus } from "lucide-react"
 import { useParams } from "react-router-dom"
 import axiosConfig from '../../../api/axiosConfig';
+import { Loading } from '../../common/Iconse';
 
 const AddToWatchList: React.FC = () => {
     const { id } = useParams();
+    type response = {
+        status: boolean
+        message: string
+    }
+    const [Response, setResponse] = useState<response | null>();
+    const [loading, setLoading] = useState<boolean>(false);
 
     const AddToWatchList = async () => {
         try {
+            setLoading(true);
             const token = localStorage.getItem("token");
             const response = await axiosConfig.post("watchlist/add", { product_id: id }, {
                 headers: {
                     Authorization: token
                 }
             });
-            console.log(response);
-        } catch (error) {
+            setLoading(false);
+            setResponse(response.data);
+        } catch (error: any) {
+            setLoading(false)
             console.log(error);
+            setResponse(error.response.data);
         }
     }
+
     return (
         <>
-            <button 
-            className="w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            onClick={AddToWatchList}
+            <button
+                className="w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                onClick={AddToWatchList}
             >
-                <Plus className="h-4 w-4 mr-2" />
+                {loading ? <Loading className="h-4 w-4 mr-2" /> : <Plus className="h-4 w-4 mr-2" />}
+
                 Add to Watchlist
             </button>
+            {Response && (
+                <div
+                    className={`w-full flex mt-2.5 justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white 
+                          ${Response.status === true ? "bg-green-600" : "bg-red-600"} 
+                          focus:outline-none focus:ring-2 focus:ring-offset-2 
+                          ${Response.status === true ? "focus:ring-yellow-500" : "focus:ring-red-500"}
+                        `}
+                >
+                    {Response.message}
+                </div>
+            )}
 
             {/* Price Alert Settings */}
             <div className="mt-4">

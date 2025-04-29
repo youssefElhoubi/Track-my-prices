@@ -19,7 +19,6 @@ type compaired = {
 
 
 const ProcutCompair: React.FC<props> = ({ compaired, mainPlatfornm, mainPrice }) => {
-    console.log(compaired);
 
     return (
         <>
@@ -38,7 +37,6 @@ const ProcutCompair: React.FC<props> = ({ compaired, mainPlatfornm, mainPrice })
                             const price: number = parseFloat(mainPrice);
                             const elementPrice: number = parseFloat(ele.price)
                             const diffPercent: number = (((elementPrice - price) / price) * 100).toFixed(2)
-                            console.log(typeof (ele.price));
 
                             return (
                                 <div className="flex items-center justify-between bg-gray-50 rounded-lg p-3" key={i}>
