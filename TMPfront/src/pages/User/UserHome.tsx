@@ -37,18 +37,13 @@ const UserHome: React.FC = () => {
                                     </div>
                                 )
                             })}
-                            <ProductCard />
-                            <ProductCard />
-                            <ProductCard />
-                            <ProductCard />
                         </div>
                     )
             }
-
-            <Footer />
-
+            <div className='mt-5'>
+                <Footer />
+            </div>
         </>
     )
 }
-
 export default UserHome

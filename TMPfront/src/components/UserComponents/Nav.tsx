@@ -12,19 +12,21 @@ const Navbar: React.FC = () => {
             <div className=" mx-auto px-4 sm:px-6 lg:px-8 shadow-lg py-2">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo and brand */}
-                    <div className="flex items-center">
-                        <div className="flex-shrink-0 flex items-center">
-                            <div className="h-8 w-8 bg-teal-100 flex items-center justify-center mr-2 rounded-s overflow-hidden ">
-                                <img src={logo} alt="" />
+                    <a href="/user">
+                        <div className="flex items-center">
+                            <div className="flex-shrink-0 flex items-center">
+                                <div className="h-8 w-8 bg-teal-100 flex items-center justify-center mr-2 rounded-s overflow-hidden ">
+                                    <img src={logo} alt="" />
+                                </div>
+                                <span className="font-bold text-gray-900 hidden sm:block">TrackMyPrices</span>
                             </div>
-                            <span className="font-bold text-gray-900 hidden sm:block">TrackMyPrices</span>
                         </div>
-                    </div>
+                    </a>
 
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center space-x-4">
                         <nav className="flex space-x-4">
-                            <a href="#" className="text-gray-700 hover:text-blue-600">
+                            <a href="/user" className="text-gray-700 hover:text-blue-600">
                                 Home
                             </a>
                             <a href="#" className="text-gray-700 hover:text-blue-600">

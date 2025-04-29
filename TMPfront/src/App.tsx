@@ -27,7 +27,7 @@ function App() {
           {/* after log in  */}
           <Route path="/user" element={<Privet Componnet={UserHome} />} />
           <Route path="/user/product/add" element={<Privet Componnet={TraceNewProduct} />} />
-          <Route path="/test/:id" element={<ProductDetailPage />} />
+          <Route path="/user/product/:id" element={<Privet Componnet={ProductDetailPage}/>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
