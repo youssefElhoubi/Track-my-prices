@@ -18,6 +18,7 @@ ChartJS.register(
     Tooltip,
     Legend
 );
+
 type Root = {
     history : Hestory[]
 }
