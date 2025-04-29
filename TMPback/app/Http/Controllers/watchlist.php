@@ -15,7 +15,7 @@ class watchlist extends Controller
         try {
             $user_Id = $request->user_id;
             $validation = $request->validate([
-                "product_id" => "required|numirec",
+                "product_id" => "required|numeric",
             ]);
             $productId = $request->product_id;
             WatchListM::create([

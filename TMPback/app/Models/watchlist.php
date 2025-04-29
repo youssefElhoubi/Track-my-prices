@@ -7,7 +7,7 @@ use App\Models\User;
 
 class watchlist extends Model
 {
-    protected $table = 'watchlist';
+    protected $table = 'watch_list';
     protected $fillable = [
         "user_id",
         "product_id"
