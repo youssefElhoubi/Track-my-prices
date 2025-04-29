@@ -7,12 +7,14 @@ import ProductCurrentInfo from "../../components/product/product Detailes/Produc
 import PriceChart from "../../components/product/product Detailes/PriceChart"
 import RightSide from "../../components/product/product Detailes/RightSide"
 import { Loadingnew, LoadingSpiner } from "../../components/common/Iconse"
+import ProcutCompair from "../../components/product/product Detailes/ProcutCompair"
 
 type Root = {
     success: boolean
     message: string
     data: Data
     hestory: Hestory[]
+    compairedProducts:any
 }
 
 type Data = {
@@ -74,6 +76,7 @@ const ProductDetailPage: React.FC = () => {
                 updated_at: "2025-04-24T10:41:06.000000Z"
             }
         ],
+        compairedProducts : null
     });
     const [diff, setdiff] = useState(productInfo.data.hestory[0].priceDiff)
     const { id } = useParams();
@@ -124,6 +127,7 @@ const ProductDetailPage: React.FC = () => {
                                                 <PriceChart history={productInfo?.data.hestory} />
 
                                                 {/* Platform Comparison */}
+                                                <ProcutCompair compaired={productInfo.compairedProducts} mainPlatfornm={productInfo.data.platformName} mainPrice={productInfo?.data.curentPrice}/>
                                                 <div className="mt-8">
                                                     <h2 className="text-lg font-medium text-gray-900 mb-4">Platform Comparison</h2>
                                                     <div className="space-y-3">
