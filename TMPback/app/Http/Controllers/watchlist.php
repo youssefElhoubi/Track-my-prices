@@ -18,6 +18,15 @@ class watchlist extends Controller
                 "product_id" => "required|numeric",
             ]);
             $productId = $request->product_id;
+            $exists = WatchListM::where('user_id', $user_Id)
+                ->where('product_id', $productId)
+                ->exists();
+            if ($exists) {
+                return response()->json([
+                    "status" => "exists",
+                    "message" => "This product is already in your watch list."
+                ], 409);
+            }
             WatchListM::create([
                 "user_id" => $user_Id,
                 "product_id" => $productId
