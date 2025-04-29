@@ -87,6 +87,6 @@ const compareNewEgg = async (title) => {
     }
 };
 
-compareNewEgg(process.argv[2]);
+// compareNewEgg(process.argv[2]);
 
 export default compareNewEgg;

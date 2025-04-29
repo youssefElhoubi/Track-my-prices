@@ -10,7 +10,7 @@ const compareEbay = async (title) => {
             "--no-sandbox",
             "--disable-setuid-sandbox",
             "--disable-blink-features=AutomationControlled",
-            "--proxy-server=38.154.227.167:5868",
+            // "--proxy-server=38.154.227.167:5868",
         ]
     });
 
@@ -39,10 +39,10 @@ const compareEbay = async (title) => {
         });
 
         // Authenticate if proxy requires credentials
-        await page.authenticate({
-            username: "cptjffkd",
-            password: "f0i56dktc42r", 
-        });
+        // await page.authenticate({
+        //     username: "cptjffkd",
+        //     password: "f0i56dktc42r", 
+        // });
 
         // Open eBay
         await page.goto("https://www.ebay.com", { waitUntil: "networkidle2", timeout: 90000 });
@@ -58,21 +58,18 @@ const compareEbay = async (title) => {
         try {
             productTitle = await page.$eval("ul>li.s-item.s-item__pl-on-bottom .s-item__title", (el) => el.innerText.trim());
         } catch {
-            console.error("❌ Product title not found.");
             return JSON.stringify({ error: "Product title is missing", code: 404 });
         }
 
         try {
             productImage = await page.$eval("ul>li.s-item.s-item__pl-on-bottom img", (el) => el.src);
         } catch {
-            console.error("❌ Product image not found.");
             return JSON.stringify({ error: "Product image is missing", code: 404 });
         }
 
         try {
             productPrice = await page.$eval("ul>li.s-item.s-item__pl-on-bottom .s-item__price", (el) => el.innerText.split("$")[1].trim());
         } catch {
-            console.error("❌ Product price not found.");
             return JSON.stringify({ error: "Product price is missing", code: 404 });
         }
 
@@ -86,10 +83,10 @@ const compareEbay = async (title) => {
         return JSON.stringify(productInfo);
 
     } catch (error) {
-        console.error("❌ Scraping Error:", error.message);
         return JSON.stringify({ error: error.message, code: 500 });
     } finally {
         if (browser) await browser.close();
     }
 };
+// compareEbay(process.argv[2]);
 export default compareEbay;

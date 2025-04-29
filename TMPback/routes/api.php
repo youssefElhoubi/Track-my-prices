@@ -10,6 +10,7 @@ use App\Http\Controllers\admin;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Controllers\compare;
 
 // sign up sign in end points
 Route::post("decode", function (Request $request) {
@@ -53,4 +54,8 @@ Route::middleware(["jwtcheck", "isAdmin"])->group(function () {
     Route::get("/admin/statistect", [admin::class, "statistect"]);
     Route::get("/admin/users", [admin::class, "allUsers"]);
     Route::patch("/admin/users/{id}/approve", [admin::class, "approveUser"]);
+});
+
+Route::get("test", function(){
+    return response()->json(compare::compaire("jshfkjsdhfkjs","amazon"));
 });

@@ -58,21 +58,18 @@ const compareAmazon = async (title) => {
         try {
             productTitle = await page.$eval("[data-cy='title-recipe'] h2 span", el => el.innerText.trim());
         } catch {
-            console.error("❌ Product title not found.");
             return JSON.stringify({ error: "Product title is missing", code: 404 });
         }
 
         try {
             productImage = await page.$eval(".s-image", el => el.src);
         } catch {
-            console.error("❌ Product image not found.");
             return JSON.stringify({ error: "Product image is missing", code: 404 });
         }
 
         try {
             productPrice = await page.$eval(".a-price .a-offscreen", el => el.innerText.trim());
         } catch {
-            console.error("❌ Product price not found.");
             return JSON.stringify({ error: "Product price is missing", code: 404 });
         }
 
@@ -85,13 +82,12 @@ const compareAmazon = async (title) => {
 
         return JSON.stringify(productInfo);
     } catch (error) {
-        console.error("❌ Scraping Error:", error.message);
         return JSON.stringify({ error: error.message, code: 500 });
     } finally {
         if (browser) await browser.close();
     }
 };
 
-compareAmazon(process.argv[2]);
+// compareAmazon(process.argv[2]);
 
 export default compareAmazon;

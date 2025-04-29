@@ -4,6 +4,8 @@ import compareNewEgg from "./compairePrices/compaireNewEgg.js";
 
 const compairePrice = async (productTitle, webSite) => {
     try {
+        console.log(productTitle, webSite);
+        
         let mainProduct;
         let comparisons = {};
 
