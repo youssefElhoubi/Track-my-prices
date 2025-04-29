@@ -6,7 +6,7 @@ import { ProductInfo } from "../../api/getProductInfo"
 import ProductCurrentInfo from "../../components/product/product Detailes/ProductCurrentInfo"
 import PriceChart from "../../components/product/product Detailes/PriceChart"
 import RightSide from "../../components/product/product Detailes/RightSide"
-import { Loadingnew, LoadingSpiner } from "../../components/common/Iconse"
+import { LoadingSpiner } from "../../components/common/Iconse"
 import ProcutCompair from "../../components/product/product Detailes/ProcutCompair"
 
 type Root = {
@@ -14,7 +14,7 @@ type Root = {
     message: string
     data: Data
     hestory: Hestory[]
-    compairedProducts:any
+    compairedProducts: any
 }
 
 type Data = {
@@ -42,6 +42,8 @@ type Hestory = {
 
 const ProductDetailPage: React.FC = () => {
     const [loading, setLoading] = useState(true);
+    const [comp, setComp] = useState<any>();
+
     const [productInfo, setProductInfo] = useState<Root>({
         success: true,
         message: "Product retrieved successfully.",
@@ -76,9 +78,9 @@ const ProductDetailPage: React.FC = () => {
                 updated_at: "2025-04-24T10:41:06.000000Z"
             }
         ],
-        compairedProducts : null
+        compairedProducts: null
     });
-    const [diff, setdiff] = useState(productInfo.data.hestory[0].priceDiff)
+    const [diff, setdiff] = useState(productInfo.data.hestory[0].priceDiff);
     const { id } = useParams();
 
 
@@ -91,14 +93,18 @@ const ProductDetailPage: React.FC = () => {
                 const response = await ProductInfo(id, token);
                 setProductInfo(response?.data);
                 setdiff(response?.data.data.hestory.at(-1).priceDiff);
+                const resultArray = Object.values(response?.data.compairedProducts).map((str: any) => {
+                    const parsed = JSON.parse(str);
+                    return parsed.data;
+                });
+                setComp(resultArray);
                 setLoading(false);
             }
         }
         getInfo();
-    }, [])
-    console.log(productInfo);
-    
-    console.log(diff);
+    }, []);
+
+
 
 
     return (
@@ -122,38 +128,12 @@ const ProductDetailPage: React.FC = () => {
                                         <div className="p-6 flex justify-between flex-wrap">
                                             {/* Product Header */}
                                             <div>
-                                                <ProductCurrentInfo title={productInfo?.data.name} price={productInfo?.data.curentPrice} image={productInfo?.data.productImage} priceDrop={diff} url={productInfo.data.url}  />
+                                                <ProductCurrentInfo title={productInfo?.data.name} price={productInfo?.data.curentPrice} image={productInfo?.data.productImage} priceDrop={diff} url={productInfo.data.url} />
                                                 {/* Price History */}
                                                 <PriceChart history={productInfo?.data.hestory} />
 
                                                 {/* Platform Comparison */}
-                                                <ProcutCompair compaired={productInfo.compairedProducts} mainPlatfornm={productInfo.data.platformName} mainPrice={productInfo?.data.curentPrice}/>
-                                                <div className="mt-8">
-                                                    <h2 className="text-lg font-medium text-gray-900 mb-4">Platform Comparison</h2>
-                                                    <div className="space-y-3">
-                                                        <div className="flex items-center justify-between bg-green-50 rounded-lg p-3">
-                                                            <span className="font-medium">Amazon</span>
-                                                            <div className="text-right">
-                                                                <div className="font-medium text-green-600">$249.99</div>
-                                                                <div className="text-xs text-gray-500">In Stock</div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="flex items-center justify-between bg-gray-50 rounded-lg p-3">
-                                                            <span className="font-medium">Best Buy</span>
-                                                            <div className="text-right">
-                                                                <div className="font-medium">$279.99</div>
-                                                                <div className="text-xs text-gray-500">+12% from Amazon</div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="flex items-center justify-between bg-gray-50 rounded-lg p-3">
-                                                            <span className="font-medium">Walmart</span>
-                                                            <div className="text-right">
-                                                                <div className="font-medium">$299.99</div>
-                                                                <div className="text-xs text-gray-500">+20% from Amazon</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <ProcutCompair compaired={comp} mainPlatfornm={productInfo.data.platformName} mainPrice={productInfo?.data.curentPrice} />
                                             </div>
 
                                             <div className="">

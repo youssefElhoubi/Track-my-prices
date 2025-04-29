@@ -10,9 +10,17 @@ type compaired = {
     platformName: string
 }
 
-const   ProcutCompair: React.FC<props> = ({ compaired, mainPlatfornm, mainPrice }) => {
+// type ProductData = {
+//     productTitle: string;
+//     productImage: string;
+//     price: string; 
+//     platformName: string;
+// }
+
+
+const ProcutCompair: React.FC<props> = ({ compaired, mainPlatfornm, mainPrice }) => {
     console.log(compaired);
-    
+
     return (
         <>
             <div className="mt-8">
@@ -28,7 +36,10 @@ const   ProcutCompair: React.FC<props> = ({ compaired, mainPlatfornm, mainPrice 
                     {
                         compaired.map((ele: compaired, i: number) => {
                             const price: number = parseFloat(mainPrice);
-                            const diffPercent = (((ele.price - price) / price) * 100).toFixed(2)
+                            const elementPrice: number = parseFloat(ele.price)
+                            const diffPercent: number = (((elementPrice - price) / price) * 100).toFixed(2)
+                            console.log(typeof (ele.price));
+
                             return (
                                 <div className="flex items-center justify-between bg-gray-50 rounded-lg p-3" key={i}>
                                     <span className="font-medium">{ele.platformName}</span>
