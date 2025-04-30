@@ -50,7 +50,7 @@ const ProductTracker: React.FC = () => {
         <>
             <Navbar />
             <div className="flex justify-between items-center my-8 mx-[10%] ">
-                <h1 className="text-2xl font-bold text-gray-900">Welcome back, Sarah!</h1>
+                <h1 className="text-2xl font-bold text-gray-900">Welcome back,</h1>
                 <button className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md text-sm font-medium flex items-center">
                     <span className="mr-1">+</span> Add Product
                 </button>
