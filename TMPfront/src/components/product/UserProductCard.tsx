@@ -25,13 +25,14 @@ type Hestory = {
 
 
 const UserProductCard: React.FC<product> = ({ id, url, name, productImage, curentPrice, platformName, user_id, created_at, updated_at, hestory }) => {
+console.log(hestory.flat(-1));
 
     const [isDown, setisDown] = useState<boolean>(false);
     const [diff, setDiff] = useState(hestory?.at(-1).priceDiff);
 
     useEffect(() => {
         if (diff <= 0) {
-            console.log("hfjksdhfkjsdhfkj");
+            // console.log("hfjksdhfkjsdhfkj");
             setisDown(true);
         }
     }, []);

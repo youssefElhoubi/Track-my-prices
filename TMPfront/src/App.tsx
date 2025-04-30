@@ -9,6 +9,7 @@ import Privet from "./protected/Privet";
 import ResetPassword from "./pages/ResetPassword";
 import NewPasswordReset from "./pages/NewPasswordReset";
 import ProductDetailPage from "./pages/User/ProducrDetailes";
+import ProductTracker from "./pages/User/Myprodcuts";
 
 
 
@@ -27,7 +28,8 @@ function App() {
           {/* after log in  */}
           <Route path="/user" element={<Privet Componnet={UserHome} />} />
           <Route path="/user/product/add" element={<Privet Componnet={TraceNewProduct} />} />
-          <Route path="/user/product/:id" element={<Privet Componnet={ProductDetailPage}/>} />
+          <Route path="/user/product/:id" element={<Privet Componnet={ProductDetailPage} />} />
+          <Route path="/test" element={<ProductTracker />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
