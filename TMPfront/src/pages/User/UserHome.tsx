@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/UserComponents/Nav';
 import Allproducts from '../../components/UserComponents/Allproducts';
-import ProductCard from '../../components/product/ProductCard';
 import ProductsStor from '../../stor/ProductsStore';
 import { Loading } from "../../components/common/Iconse";
 import UserProductCard from "../../components/product/UserProductCard";
 import Footer from '../../components/lanign components/Footer';
 
 const UserHome: React.FC = () => {
-    const [data, setdata] = useState<any>("");
     const { error, fetchProducts, isloading, response } = ProductsStor();
     useEffect(() => {
         const token = localStorage.getItem("token");
