@@ -35,14 +35,11 @@ const ScrapedProductInof: React.FC<props> = ({ title, image, price, Platform, ur
                 productPlatform: Platform,
                 url
             }
-            console.log(data);
-            
             const response = await axiosConfig.post("product/add", data, {
                 headers: {
                     Authorization: token
                 }
             });
-            console.log(response);
 
             if (response.data.success) {
                 setProductAdded(true);

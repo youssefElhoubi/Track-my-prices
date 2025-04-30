@@ -1,13 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/UserComponents/Nav';
 import Footer from '../../components/lanign components/Footer';
+import axiosConfig from '../../api/axiosConfig';
+
+type ResponseData = {
+    id: number;
+    url: string;
+    name: string;
+    curentPrice: string;
+    platformName: string;
+    user_id: number;
+    created_at: string;
+    updated_at: string;
+    productImage?: string;
+};
 
 const ProductTracker: React.FC = () => {
-    const [MyProducts, setMyProducts] = useState();
+    const [myProducts, setMyProducts] = useState<ResponseData[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const getMyProducts = async () => {
+        try {
+            const token = localStorage.getItem("token");
+            const response = await axiosConfig.get<{ success: boolean; message: string; data: ResponseData[] }>(
+                "product/own",
+                {
+                    headers: {
+                        Authorization: token,
+                    },
+                }
+            );
+            console.log(response);
+
+            setMyProducts(response.data.data);
+        } catch (error) {
+            console.error("Failed to fetch products", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        getMyProducts();
+    }, []);
+
     return (
         <>
             <Navbar />
-
             <div className="flex justify-between items-center my-8 mx-[10%] ">
                 <h1 className="text-2xl font-bold text-gray-900">Welcome back, Sarah!</h1>
                 <button className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md text-sm font-medium flex items-center">
@@ -15,45 +54,62 @@ const ProductTracker: React.FC = () => {
                 </button>
             </div>
 
-            <div className=" h-1/2 flex items-center justify-center p-4 ">
+            <div className="h-1/2 flex items-center justify-center p-4 ">
                 <div className="bg-white rounded-lg shadow-lg w-full overflow-hidden">
                     <div className="p-6 flex justify-around">
-                        <div className='w-1/2 shadow-lg px-5  rounded-3xl'>
-
+                        <div className="w-1/2 shadow-lg px-5 rounded-3xl">
                             <div className="mb-6">
                                 <div className="flex justify-between items-center mb-4">
                                     <h2 className="text-lg font-bold text-gray-900">Tracked Products</h2>
-                                    <button className="text-red-500">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
-                                        </svg>
-                                    </button>
                                 </div>
 
-                                <div className="border border-gray-200 rounded-lg p-4 mb-4">
-                                    <div className="flex justify-between mb-1">
-                                        <div className="flex">
-                                            <span className="text-gray-600 mr-2">Product</span>
-                                        </div>
-                                        <span className="font-bold text-gray-900">$249.99</span>
-                                    </div>
-
-                                    <div className="flex justify-between items-start">
-                                        <div>
-                                            <h3 className="font-medium text-gray-900">Wireless Headphones</h3>
-                                            <p className="text-sm text-gray-600">Amazon, Best Buy</p>
-                                            <div className="flex items-center mt-1">
-                                                <span className="text-green-500 text-sm font-medium">↑ 15%</span>
-                                                <span className="text-gray-500 text-sm ml-2">• Last updated 2h ago</span>
+                                {isLoading ? (
+                                    <p>Loading...</p>
+                                ) : myProducts.length === 0 ? (
+                                    <p>No products tracked.</p>
+                                ) : (
+                                    myProducts.map((product) => (
+                                        <div
+                                            key={product.id}
+                                            className="border border-gray-200 rounded-lg p-4 mb-4"
+                                        >
+                                            <div className="flex justify-between mb-1">
+                                                <div className="flex">
+                                                    <span className="text-gray-600 mr-2">{product.name}</span>
+                                                </div>
+                                                <span className="font-bold text-gray-900">
+                                                    ${product.curentPrice}
+                                                </span>
+                                            </div>
+                                            <div className="flex justify-between items-start">
+                                                <div>
+                                                    <h3 className="font-medium text-gray-900">{product.name}</h3>
+                                                    <p className="text-sm text-gray-600">{product.platformName}</p>
+                                                    <div className="flex items-center mt-1">
+                                                        <span className="text-green-500 text-sm font-medium">
+                                                            ↑ 15%
+                                                        </span>
+                                                        <span className="text-gray-500 text-sm ml-2">
+                                                            • Last updated: {new Date(product.updated_at).toLocaleString()}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <a
+                                                    href={product.url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-blue-600 text-sm"
+                                                >
+                                                    View Details
+                                                </a>
                                             </div>
                                         </div>
-                                        <a href="#" className="text-blue-600 text-sm">View Details</a>
-                                    </div>
-                                </div>
+                                    ))
+                                )}
                             </div>
                         </div>
-                        {/* Quick Actions */}
-                        <div className='w-[25%]'>
+
+                        <div className="w-[25%]">
                             <h2 className="text-lg font-bold text-gray-900 mb-4">Quick Actions</h2>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="bg-gray-50 rounded-lg p-4 flex flex-col items-center justify-center">
@@ -78,6 +134,7 @@ const ProductTracker: React.FC = () => {
                     </div>
                 </div>
             </div>
+
             <Footer />
         </>
     );
