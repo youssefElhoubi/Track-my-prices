@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import axiosConfig from "../api/axiosConfig";
-import { ProductsStorType, } from "../types/UserStor"
+import { ProductsStorType, } from "../types/ProductStor"
 
 
 
