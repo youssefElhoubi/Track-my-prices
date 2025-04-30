@@ -34,6 +34,7 @@ class product extends Controller
                 "curentPrice" => $request->productPrice,
                 "platformName" => $request->productPlatform,
                 "user_id" => $request->user_id,
+                "productImage" =>$request->productImage
             ]);
             products_history::create([
                 "product_id" => $newProduct->id,

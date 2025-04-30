@@ -15,7 +15,8 @@ class products extends Model
         "name",
         "curentPrice",
         "platformName",
-        "user_id"
+        "user_id",
+        "productImage"
     ];
     public function hestory() {
         return $this->hasMany(products_history::class,"product_id");
