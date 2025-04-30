@@ -379,5 +379,26 @@ export function LoadingSpiner({ className }: { className?: string }) {
         </svg>
     )
 }
+export function ColorChangingSpiner({ className }: { className?: string }) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 200 200"
+            className={`w-10 h-10 animate-spin ${className}`}
+        >
+            <circle
+                cx="100"
+                cy="100"
+                r="70"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="15"
+                strokeLinecap="round"
+                strokeDasharray="200 1000"
+                strokeDashoffset="0"
+            />
+        </svg>
+    )
+}
 
 

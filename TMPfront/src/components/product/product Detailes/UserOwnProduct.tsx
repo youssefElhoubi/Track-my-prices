@@ -1,15 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Trash2 } from "lucide-react"
 import type { ResponseData } from '../../../pages/User/Myprodcuts'
+import axiosConfig from '../../../api/axiosConfig'
+import { ColorChangingSpiner, Loading } from '../../common/Iconse'
+import {v4 as uuid} from "uuid";
 type product = {
     product: ResponseData
+    token:string
+    refetch: (value:any)=> void
 }
 
-const UserOwnProduct: React.FC<product> = ({ product }) => {
+const UserOwnProduct: React.FC<product> = ({ product,token,refetch }) => {
+    const [isLoading, setIsLoading] = useState(false);
+
+    const deletProducts = async (id: number, token: string) => {
+        try {
+            setIsLoading(true)
+            const response = await axiosConfig.delete(`product/${id}`, {
+                headers: {
+                    Authorization: token
+                }
+            });
+            refetch(uuid());
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
     return (
         <>
+        <Loading className='text-blue-700  w-3' />
             <div className=' relative'>
-                <Trash2 color="#a30000" className='absolute right-0 top-0' />
+                {isLoading ? <ColorChangingSpiner className='text-blue-700 absolute right-0 top-0' /> : <Trash2 color="#a30000" className='absolute right-0 top-0' onClick={()=>{deletProducts(product.id,token)}} />}
                 <div className="flex justify-between mb-1 w-[15%] ">
                     <img src={product.productImage} alt="" />
                 </div>
