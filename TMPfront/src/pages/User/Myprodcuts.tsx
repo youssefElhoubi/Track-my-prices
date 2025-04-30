@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/UserComponents/Nav';
 import Footer from '../../components/lanign components/Footer';
 import axiosConfig from '../../api/axiosConfig';
+import UserOwnProduct from '../../components/product/product Detailes/UserOwnProduct';
+import { LoadingSpiner } from '../../components/common/Iconse';
 
-type ResponseData = {
+export type ResponseData = {
     id: number;
     url: string;
     name: string;
@@ -64,7 +66,7 @@ const ProductTracker: React.FC = () => {
                                 </div>
 
                                 {isLoading ? (
-                                    <p>Loading...</p>
+                                    <LoadingSpiner />
                                 ) : myProducts.length === 0 ? (
                                     <p>No products tracked.</p>
                                 ) : (
@@ -73,36 +75,7 @@ const ProductTracker: React.FC = () => {
                                             key={product.id}
                                             className="border border-gray-200 rounded-lg p-4 mb-4"
                                         >
-                                            <div className="flex justify-between mb-1">
-                                                <div className="flex">
-                                                    <span className="text-gray-600 mr-2">{product.name}</span>
-                                                </div>
-                                                <span className="font-bold text-gray-900">
-                                                    ${product.curentPrice}
-                                                </span>
-                                            </div>
-                                            <div className="flex justify-between items-start">
-                                                <div>
-                                                    <h3 className="font-medium text-gray-900">{product.name}</h3>
-                                                    <p className="text-sm text-gray-600">{product.platformName}</p>
-                                                    <div className="flex items-center mt-1">
-                                                        <span className="text-green-500 text-sm font-medium">
-                                                            ↑ 15%
-                                                        </span>
-                                                        <span className="text-gray-500 text-sm ml-2">
-                                                            • Last updated: {new Date(product.updated_at).toLocaleString()}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <a
-                                                    href={product.url}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="text-blue-600 text-sm"
-                                                >
-                                                    View Details
-                                                </a>
-                                            </div>
+                                            <UserOwnProduct product={product} />
                                         </div>
                                     ))
                                 )}
@@ -134,7 +107,6 @@ const ProductTracker: React.FC = () => {
                     </div>
                 </div>
             </div>
-
             <Footer />
         </>
     );
