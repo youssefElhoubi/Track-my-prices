@@ -6,7 +6,7 @@ type WatchlistState = {
     response: any;
     isLoading: boolean;
     error: any;
-    fetchWatchLst: (token: string) => void
+    fetchWatchLst: (token: string|null) => void
 };
 
 const userWatchlist = create<WatchlistState>((set) => ({
@@ -21,6 +21,7 @@ const userWatchlist = create<WatchlistState>((set) => ({
                     Authorization: token
                 }
             })
+            
             set({ response: result.data, isLoading: false });
         } catch (error) {
             console.log(error);
