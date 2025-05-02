@@ -51,7 +51,7 @@ class watchlist extends Controller
 
             // Fetch the watchlist products directly
             $watchProducts = WatchListM::where('user_id', $userId)
-                ->with('product')
+                ->with('product.hestory')
                 ->get()
                 ->pluck('product');
 

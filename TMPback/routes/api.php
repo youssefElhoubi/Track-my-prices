@@ -11,6 +11,7 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\compare;
+use App\Http\Controllers\user;
 
 // sign up sign in end points
 Route::post("decode", function (Request $request) {
@@ -46,6 +47,8 @@ Route::middleware(["jwtcheck", "isUser"])->group(function () {
     Route::post("watchlist/add", [watchlist::class, "addToWachList"]);
     Route::delete("watchlist", [watchlist::class, "removeFromWtchlist"]);
     Route::get("watchlist", [watchlist::class, "myWatchLits"]);
+    // user account end points
+    Route::get("user/info", [user::class, "userInfo"]);
 });
 Route::middleware(["jwtcheck", "isAdmin"])->group(function () {
     Route::get("admin/products", [product::class, "productsWithUser"]);

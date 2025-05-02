@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\products;
 use Illuminate\Http\Request;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
 use App\Models\User as UserModel;
 use carbon\Carbon;
+use Symfony\Component\HttpFoundation\Response;
 
 class user extends Controller
 {
@@ -51,5 +53,11 @@ class user extends Controller
                 'message' =>  $e->getMessage()
             ], 500);
         }
+    }
+    public function userInfo(Request $request){
+        $userId = $request->user_id;
+        $userInfo=UserModel::find($userId);
+        $totaleProducts = products::where("user_id","=",$userInfo->id)->count();
+        return response()->json(["data"=>$userInfo,"totaleProdcuts"=>$totaleProducts],Response::HTTP_OK);
     }
 }
