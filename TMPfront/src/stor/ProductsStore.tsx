@@ -27,5 +27,24 @@ const ProductsStor = create<ProductsStorType>((set) => ({
             });
         }
     },
+    fetchCurentPageProducts: async (token: string, PageNumber: number) => {
+        set({ isloading: true, error: null });
+        try {
+            const res = await axiosConfig.get(`product/all?page=${PageNumber}`, {
+                headers: {
+                    Authorization: token
+                }
+            });
+            set({
+                response: res.data,
+                isloading: false,
+            });
+        } catch (err) {
+            set({
+                error: "Failed to fetch products",
+                isloading: false,
+            });
+        }
+    },
 }));
 export default ProductsStor

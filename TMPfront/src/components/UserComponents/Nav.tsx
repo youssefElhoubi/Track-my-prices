@@ -29,7 +29,7 @@ const Navbar: React.FC = () => {
                             <a href="/user" className="text-gray-700 hover:text-blue-600">
                                 Home
                             </a>
-                            <a href="#" className="text-gray-700 hover:text-blue-600">
+                            <a href="/wacthlist" className="text-gray-700 hover:text-blue-600">
                                 My Products
                             </a>
                         </nav>
@@ -51,7 +51,7 @@ const Navbar: React.FC = () => {
 
                     {/* Right side icons */}
                     <div className="flex items-center space-x-4">
-                        <a href="#" className="text-gray-700 hover:text-blue-600 hidden lg:flex items-center">
+                        <a href="/wacthlist" className="text-gray-700 hover:text-blue-600 hidden lg:flex items-center">
                             <Bookmark className="h-5 w-5 mr-1" />
                             <span>Watchlist</span>
                         </a>
@@ -92,6 +92,7 @@ const Navbar: React.FC = () => {
             {/* Mobile menu */}
             {isMenuOpen && (
                 <ProfileDropdown />
+                
             )}
 
         </>

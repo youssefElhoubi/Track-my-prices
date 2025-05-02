@@ -5,17 +5,26 @@ import ProductsStor from '../../stor/ProductsStore';
 import { Loading } from "../../components/common/Iconse";
 import UserProductCard from "../../components/product/UserProductCard";
 import Footer from '../../components/lanign components/Footer';
+import Pagination from '../../components/common/Pagination';
 
 const UserHome: React.FC = () => {
-    const { error, fetchProducts, isloading, response } = ProductsStor();
+
+    const { error, fetchProducts, isloading, response, fetchCurentPageProducts } = ProductsStor();
+    const [CurrentPage, setCurrentPage] = useState<number>(1)
+
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
             fetchProducts(token);
         }
     }, [])
-    // setdata(response?.data.data);
-    // console.log(response);
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            fetchCurentPageProducts(token, CurrentPage);
+        }
+    }, [CurrentPage])
 
     return (
         <>
@@ -38,6 +47,7 @@ const UserHome: React.FC = () => {
                         </div>
                     )
             }
+            <Pagination currentPage={CurrentPage} totalPages={response?.data.last_page} onPageChange={setCurrentPage} />
             <div className='mt-5'>
                 <Footer />
             </div>

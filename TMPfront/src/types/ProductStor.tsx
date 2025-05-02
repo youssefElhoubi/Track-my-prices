@@ -53,4 +53,5 @@ export type ProductsStorType = {
     isloading: boolean;
     error: string | null;
     fetchProducts: (token: string) => Promise<void>;
+    fetchCurentPageProducts: (token: string,PageNumber:number) => Promise<void>;
 };

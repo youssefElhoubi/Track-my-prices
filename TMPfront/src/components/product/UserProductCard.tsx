@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 
-
 type product = {
     id: number
     url: string
@@ -25,7 +24,6 @@ type Hestory = {
 
 
 const UserProductCard: React.FC<product> = ({ id, url, name, productImage, curentPrice, platformName, user_id, created_at, updated_at, hestory }) => {
-console.log(hestory.flat(-1));
 
     const [isDown, setisDown] = useState<boolean>(false);
     const [diff, setDiff] = useState(hestory?.at(-1).priceDiff);
@@ -41,7 +39,7 @@ console.log(hestory.flat(-1));
     return (
         <a href={`/user/product/${id}`}>
             <div className="md:w-80 rounded-xl bg-white shadow-sm border border-gray-100 overflow-hidden">
-                <div className="p-4">
+                <div className="p-4 relative">
                     <div className="bg-gray-100 rounded-lg mb-4 flex items-center justify-center">
                         <img
                             src={productImage}
