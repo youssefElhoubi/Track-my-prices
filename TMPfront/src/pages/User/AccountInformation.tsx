@@ -1,20 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axiosConfig from '../../api/axiosConfig';
-import WrappedPremiumPaymentForm from '../../components/common/strip';
+import WrappedPremiumPaymentForm from '../../components/common/WrappedPremiumPaymentForm';
 
-interface AccountInformationProps {
-    trackedProducts: {
-        current: number;
-        max: number;
-    };
-    onUpgrade: () => void;
-}
 
-const AccountInformation: React.FC<AccountInformationProps> = ({
-    trackedProducts = { current: 5 },
-    onUpgrade = () => console.log("Upgrade clicked")
-}) => {
+const AccountInformation: React.FC = () => {
     const [UserInfo, setUserInfo] = useState();
+    const [premium, setPremium] = useState(false);
     useEffect(() => {
         const fetchuser = async () => {
             const token = localStorage.getItem("token");
@@ -23,7 +14,7 @@ const AccountInformation: React.FC<AccountInformationProps> = ({
                     Authorization: token
                 }
             });
-            console.log(response.data.totaleProdcuts);
+            // console.log(response.data.totaleProdcuts);
 
             setUserInfo(response.data);
         }
@@ -72,12 +63,14 @@ const AccountInformation: React.FC<AccountInformationProps> = ({
                                 <path d="M9 11H3v5a2 2 0 002 2h4v-7zM11 18h4a2 2 0 002-2v-5h-6v7z" />
                             </svg>
                         </div>
-                        <span className="ml-3 text-gray-700">Tracked Products: {UserInfo?.totaleProdcuts}/{trackedProducts.max}</span>
+                        <span className="ml-3 text-gray-700">Tracked Products: {UserInfo?.totaleProdcuts}/{UserInfo?.tier == "Free" ? 5 : 50}</span>
                     </div>
                 </div>
 
                 <button
-                    onClick={onUpgrade}
+                    onClick={() => {
+                        setPremium(!premium);
+                    }}
                     className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-md flex items-center justify-center transition duration-200"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
@@ -86,7 +79,10 @@ const AccountInformation: React.FC<AccountInformationProps> = ({
                     Upgrade to Premium
                 </button>
             </div>
-            {/* <WrappedPremiumPaymentForm/> */}
+
+            {premium && <div className='absolute'>
+                <WrappedPremiumPaymentForm />
+            </div>}
         </div>
     );
 };
