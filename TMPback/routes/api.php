@@ -56,6 +56,7 @@ Route::middleware(["jwtcheck", "isAdmin"])->group(function () {
     Route::patch("/admin/users/{id}/suspend", [admin::class, "bandUser"]);
     Route::get("/admin/statistect", [admin::class, "statistect"]);
     Route::get("/admin/users", [admin::class, "allUsers"]);
+    Route::get("/admin/users/last", [admin::class, "lastUser"]);
     Route::patch("/admin/users/{id}/approve", [admin::class, "approveUser"]);
 });
 

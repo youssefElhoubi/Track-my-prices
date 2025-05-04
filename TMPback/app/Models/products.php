@@ -22,6 +22,6 @@ class products extends Model
         return $this->hasMany(products_history::class,"product_id");
     }
     public function owner(){
-        return $this->hasOne(User::class,"user_id");
+        return $this->belongsTo(User::class,"user_id");
     }
 }

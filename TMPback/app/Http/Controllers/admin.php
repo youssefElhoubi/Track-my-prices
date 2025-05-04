@@ -38,7 +38,7 @@ class admin extends Controller
         return response()->json(
             [
                 "success" => true,
-                "message" => "user have been baned"
+                "message" => "user have been approved"
             ],
             Response::HTTP_OK
         );
@@ -58,5 +58,9 @@ class admin extends Controller
             'total_products' => $totalProducts,
             "totale_priceDrope" => $totalpriceDrops
         ]);
+    }
+    public function lastUser(Request $request){
+        $user = User::latest("id")->first();
+        return response()->json(["userInfo"=>$user]);
     }
 }
