@@ -1,18 +1,18 @@
-"use client"
-
-import React, { useState, useEffect } from "react"
-import Sidebar from "../../components/AdmineComponents/sidebar"
-import Header from "../../components/AdmineComponents/Header"
-import StatisticsCard from "../../components/AdmineComponents/statistics-card"
-import { Package, Users, TrendingDown } from "lucide-react"
-import axiosConfig from "../../api/axiosConfig"
+import React, { useState, useEffect } from "react";
+import Sidebar from "../../components/AdmineComponents/sidebar";
+import Header from "../../components/AdmineComponents/Header";
+import StatisticsCard from "../../components/AdmineComponents/statistics-card";
+import { Package, Users, TrendingDown } from "lucide-react";
+import axiosConfig from "../../api/axiosConfig";
+import getTimeSinceCreation from "../../api/createdAt";
 
 const Dashboard: React.FC = () => {
-  const [statistics,setStatistics] = useState({
+  const [statistics, setStatistics] = useState({
     total_products: 197,
     total_users: 22,
     totale_priceDrope: 6,
   })
+  const [lastUser, setLastuser] = useState();
 
   const [recentSignups] = useState([
     {
@@ -30,13 +30,26 @@ const Dashboard: React.FC = () => {
           }
         })
         setStatistics(result.data)
-        console.log(result.data);
       } catch (error) {
         console.log(error);
-
       }
     }
-    getStatiostics()
+    const getLastUser = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const result = await axiosConfig.get("/admin/users/last", {
+          headers: {
+            Authorization: token
+          }
+        })
+        console.log(result.data);
+        setLastuser(result.data)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getStatiostics();
+    getLastUser();
   }, [])
 
   return (
