@@ -37,7 +37,7 @@ function App() {
           <Route path="/wacthlist" element={<Privet Componnet={MyWatchlist} />} />
           <Route path="/use/acount" element={<Privet Componnet={AccountInformation} />} />
           <Route path="/admin" element={<Privet Componnet={Dashboard} />} />
-          <Route path="/test" element={<Privet Componnet={AdminProducts} />} />
+          <Route path="/admin/products" element={<Privet Componnet={AdminProducts} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
