@@ -1,5 +1,6 @@
 import { TrashIcon } from "lucide-react"
 import React, { useState, useEffect } from "react"
+import { deletProduct } from "../../api/adminActions"
 
 type product = {
     id: number
@@ -53,7 +54,7 @@ const AdminProductCard: React.FC<product> = ({ id, url, name, productImage, cure
                         <p className="text-gray-500 text-sm">{platformName}</p>
                         <div className="flex">
                             <img src="https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" alt="userimg" className="w-5" />
-                            <TrashIcon className="text-red-400" onClick={() => { }} />
+                            <TrashIcon className="text-red-400" onClick={() => { deletProduct(id) }} />
                         </div>
                     </div>
                 </div>
