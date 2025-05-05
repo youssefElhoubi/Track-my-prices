@@ -1,5 +1,5 @@
 import { TrashIcon } from "lucide-react"
-import React, { useState, useEffect } from "react"
+import React from "react"
 import { deletProduct } from "../../api/adminActions"
 
 type product = {
@@ -25,17 +25,7 @@ type Hestory = {
 }
 
 
-const AdminProductCard: React.FC<product> = ({ id, url, name, productImage, curentPrice, platformName, user_id, created_at, updated_at, hestory }) => {
-
-    const [isDown, setisDown] = useState<boolean>(false);
-    const [diff, setDiff] = useState(hestory?.at(-1).priceDiff);
-
-    useEffect(() => {
-        if (diff <= 0) {
-            // console.log("hfjksdhfkjsdhfkj");
-            setisDown(true);
-        }
-    }, []);
+const AdminProductCard: React.FC<product> = ({ id, name, productImage, platformName}) => {
 
 
     return (
