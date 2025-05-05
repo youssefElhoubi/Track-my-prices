@@ -1,7 +1,11 @@
-import { Bell } from "lucide-react"
+import React, { useState } from "react"
+import { Menu } from "lucide-react"
 import Logo from "../../assets/TMPlogo.png"
+import Sidebar from "./sidebar"
+import { Logout } from "../common/Iconse"
 
-export default function Header() {
+const Header = () => {
+    const [isOpen, setisOpen] = useState(false)
     return (
         <header className="bg-blue-600 text-white p-4 flex justify-between items-center z-10 w-full">
             <div className="flex items-center">
@@ -11,8 +15,11 @@ export default function Header() {
                 <h1 className="text-xl font-bold">trakMyPrice</h1>
             </div>
             <button className="text-white">
-                <Bell className="h-6 w-6" />
+                <Menu className="h-6 w-6 block md:hidden" onClick={() => { setisOpen(!isOpen) }} />
+                    <Logout className="h-6"/>
             </button>
+            <Sidebar isOpen={isOpen} ClassName="absolute left-0 top-16" />
         </header>
     )
 }
+export default Header
