@@ -6,8 +6,6 @@ type props = {
 }
 
 const Sidebar:React.FC<props> = ({ClassName,isOpen=false}) => {
-  console.log(isOpen);
-  
   const navItems = [
     { name: "Home", href: "/admin" },
     { name: "Products", href: "/products" },

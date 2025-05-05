@@ -17,7 +17,7 @@ const MyWatchlist: React.FC = () => {
     useEffect(() => {
         setWatchList(response?.data);
     }, [response]);
-    console.log(WatchList?.hestory);
+    // console.log(WatchList?.hestory);
 
     return (
         <>

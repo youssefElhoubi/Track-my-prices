@@ -13,6 +13,7 @@ import ProductTracker from "./pages/User/Myprodcuts";
 import MyWatchlist from "./pages/User/MyWatchlist";
 import AccountInformation from "./pages/User/AccountInformation";
 import Dashboard from "./pages/Admin/dashboard";
+import AdminProducts from "./pages/Admin/AdminProducts";
 
 
 
@@ -33,9 +34,10 @@ function App() {
           <Route path="/user/product/add" element={<Privet Componnet={TraceNewProduct} />} />
           <Route path="/user/product/:id" element={<Privet Componnet={ProductDetailPage} />} />
           <Route path="/user/products" element={<Privet Componnet={ProductTracker} />} />
-          <Route path="/wacthlist" element={<Privet Componnet={MyWatchlist }/>} />
-          <Route path="/use/acount" element={<Privet Componnet={AccountInformation }/>} />
-          <Route path="/admin" element={<Privet Componnet={Dashboard}/>}/>
+          <Route path="/wacthlist" element={<Privet Componnet={MyWatchlist} />} />
+          <Route path="/use/acount" element={<Privet Componnet={AccountInformation} />} />
+          <Route path="/admin" element={<Privet Componnet={Dashboard} />} />
+          <Route path="/test" element={<Privet Componnet={AdminProducts} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

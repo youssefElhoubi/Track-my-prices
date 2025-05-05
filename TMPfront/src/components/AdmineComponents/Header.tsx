@@ -4,7 +4,7 @@ import Logo from "../../assets/TMPlogo.png"
 import Sidebar from "./sidebar"
 import { Logout } from "../common/Iconse"
 
-const Header = () => {
+const Header:React.FC = () => {
     const [isOpen, setisOpen] = useState(false)
     return (
         <header className="bg-blue-600 text-white p-4 flex justify-between items-center z-10 w-full">
