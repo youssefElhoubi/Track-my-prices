@@ -7,6 +7,7 @@ import axiosConfig from "../../api/axiosConfig";
 import getTimeSinceCreation from "../../api/createdAt";
 
 const Dashboard: React.FC = () => {
+
   const [statistics, setStatistics] = useState({
     total_products: 197,
     total_users: 22,
@@ -14,12 +15,6 @@ const Dashboard: React.FC = () => {
   })
   const [lastUser, setLastuser] = useState();
 
-  const [recentSignups] = useState([
-    {
-      email: "user123@example.com",
-      timeAgo: "30 minutes ago",
-    },
-  ])
   useEffect(() => {
     const getStatiostics = async () => {
       try {
@@ -104,12 +99,11 @@ const Dashboard: React.FC = () => {
               <h2 className="text-2xl font-bold mb-4">Recent Signups</h2>
 
               <div className="space-y-2">
-                {recentSignups.map((signup, index) => (
-                  <div key={index} className="bg-gray-200 rounded-lg p-4">
-                    <p className="font-medium">{signup.email}</p>
-                    <p className="text-sm text-gray-600">{signup.timeAgo}</p>
-                  </div>
-                ))}
+
+                <div className="bg-gray-200 rounded-lg p-4">
+                  <p className="font-medium">{lastUser?.userInfo.email}</p>
+                  <p className="text-sm text-gray-600">{getTimeSinceCreation(lastUser?.userInfo.created_at)}</p>
+                </div>
               </div>
             </div>
           </main>
