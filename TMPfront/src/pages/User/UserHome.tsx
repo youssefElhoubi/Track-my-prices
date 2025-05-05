@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/UserComponents/Nav';
 import Allproducts from '../../components/UserComponents/Allproducts';
-import ProductsStor from '../../stor/ProductsStore';
+import ProductsStor from '../../store/ProductsStore';
 import { Loading } from "../../components/common/Iconse";
 import UserProductCard from "../../components/product/UserProductCard";
 import Footer from '../../components/lanign components/Footer';

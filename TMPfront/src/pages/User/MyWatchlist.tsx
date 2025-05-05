@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../../components/UserComponents/Nav'
 import Footer from '../../components/lanign components/Footer'
-import userWatchlist from '../../stor/WatchlistStpor';
+import userWatchlist from '../../store/WatchlistStpor';
 import Allproducts from '../../components/UserComponents/Allproducts';
 import { Loading, LoadingSpiner } from '../../components/common/Iconse';
 import UserProductCard from '../../components/product/UserProductCard';
