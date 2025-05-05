@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create("products",function(Blueprint $table){
             $table->id();
-            $table->string("url");
-            $table->string("name");
-            $table->string("curentPrice");
-            $table->string("platformName");
+            $table->text("url");
+            $table->text("name");
+            $table->text("curentPrice");
+            $table->text("platformName");
             $table->string("productImage");
             $table->unsignedBigInteger("user_id");
             $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");
