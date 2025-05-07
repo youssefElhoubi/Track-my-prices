@@ -81,6 +81,6 @@ const scrapEbay = async (url) => {
         if (browser) await browser.close();
     }
 };
-scrapEbay(process.argv[2])
+// scrapEbay(process.argv[2])
 
 export default scrapEbay;

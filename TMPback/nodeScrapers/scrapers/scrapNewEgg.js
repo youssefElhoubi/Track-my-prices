@@ -63,12 +63,12 @@ const scrapNewEgg = async (url) => {
             return;
         }
 
-        const fullPrice = price + sub;
+        const holePrice = price + sub;
 
         const productInfo = {
             success: true,
             code: 200,
-            data: { title, image, fullPrice,platformName:"NewEgg" }
+            data: { title, image, holePrice,platformName:"NewEgg" }
         };
 
         console.log(JSON.stringify(productInfo));
