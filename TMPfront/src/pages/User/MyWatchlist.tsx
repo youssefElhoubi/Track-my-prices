@@ -21,7 +21,7 @@ const MyWatchlist: React.FC = () => {
 
     return (
         <>
-            {isLoading ? <LoadingSpiner /> :
+            {isLoading ? <LoadingSpiner className='w-2xl mx-auto' /> :
                 (
                     <>
                         <Navbar />

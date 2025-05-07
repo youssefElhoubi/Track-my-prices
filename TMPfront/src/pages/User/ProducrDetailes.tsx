@@ -114,7 +114,7 @@ const ProductDetailPage: React.FC = () => {
                 (
                     <div className="text-center">
                         <LoadingSpiner className={"w-[20%] mx-auto"} />
-                        <h2 className="font-medium text-2xl text-[#3E6E97]">Please wate this mite take some time</h2>
+                        <h2 className="font-medium text-2xl text-[#3E6E97]">Please wait this mite take some time</h2>
                     </div>
                 )
                 : (
