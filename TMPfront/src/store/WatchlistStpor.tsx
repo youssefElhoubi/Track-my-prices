@@ -21,6 +21,8 @@ const userWatchlist = create<WatchlistState>((set) => ({
                     Authorization: token
                 }
             })
+            console.log(result);
+            
             
             set({ response: result.data, isLoading: false });
         } catch (error) {

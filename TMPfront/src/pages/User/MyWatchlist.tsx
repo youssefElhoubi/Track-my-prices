@@ -29,14 +29,24 @@ const MyWatchlist: React.FC = () => {
                             <Allproducts />
                         </div>
                         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-12 '>
-                            {
-                                WatchList?.map((ele: any) => {
-                                    return (
-                                        <div key={ele.id}>
-                                            <UserProductCard id={ele.id} url={ele.url} name={ele.name} curentPrice={ele.curentPrice} platformName={ele.platformName} user_id={ele.user_id} created_at={ele.created_at} updated_at={ele.updated_at} productImage={ele.productImage} hestory={ele.hestory} />
-                                        </div>
-                                    )
-                                })}
+                            {WatchList?.map((ele: any) => {
+                                return ele.code !== 200 ? null : (
+                                    <div key={ele.id}>
+                                        <UserProductCard
+                                            id={ele.id}
+                                            url={ele.url}
+                                            name={ele.name}
+                                            curentPrice={ele.curentPrice}
+                                            platformName={ele.platformName}
+                                            user_id={ele.user_id}
+                                            created_at={ele.created_at}
+                                            updated_at={ele.updated_at}
+                                            productImage={ele.productImage}
+                                            hestory={ele.hestory}
+                                        />
+                                    </div>
+                                );
+                            })}
                         </div>
                         <Footer />
                     </>
