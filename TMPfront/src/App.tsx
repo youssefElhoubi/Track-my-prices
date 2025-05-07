@@ -14,6 +14,7 @@ import MyWatchlist from "./pages/User/MyWatchlist";
 import AccountInformation from "./pages/User/AccountInformation";
 import Dashboard from "./pages/Admin/dashboard";
 import AdminProducts from "./pages/Admin/AdminProducts";
+import Users from "./pages/Admin/Users";
 
 
 
@@ -38,6 +39,7 @@ function App() {
           <Route path="/use/acount" element={<Privet Componnet={AccountInformation} />} />
           <Route path="/admin" element={<Privet Componnet={Dashboard} />} />
           <Route path="/admin/products" element={<Privet Componnet={AdminProducts} />} />
+          <Route path="/test" element={<Privet Componnet={Users} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
