@@ -43,9 +43,9 @@ const scrapEbay = async (url) => {
         }
 
         // Scrape product price
-        let productPrice;
+        let holePrice;
         try {
-            productPrice = await page.$eval(
+            holePrice = await page.$eval(
                 "#mainContent .x-price-section .x-bin-price__content div span",
                 el => el.innerText.replace(/[^0-9.]/g, "") // Extracts numeric price only
             );
@@ -69,7 +69,7 @@ const scrapEbay = async (url) => {
         const productInfo = {
             success: true,
             code: 200,
-            data: { productTitle, productPrice, productImage, platformName: "eBay" }
+            data: { productTitle, holePrice, productImage, platformName: "eBay" }
         };
 
         console.log(JSON.stringify(productInfo));
@@ -81,5 +81,6 @@ const scrapEbay = async (url) => {
         if (browser) await browser.close();
     }
 };
+scrapEbay(process.argv[2])
 
 export default scrapEbay;
