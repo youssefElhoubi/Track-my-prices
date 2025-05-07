@@ -34,13 +34,17 @@ class updatePrice extends Command
             $process = new Process(["node", base_path("nodeScrapers/nodeScraper.js"), $url]);
             $process->run();
             $newInfo = json_decode($process->getOutput());
-            $priceDiff =  (($newInfo->data->productPrice - $product->curentPrice) / $product->curentPrice) * 100 ;
-            $product->update(["curentPrice" => $newInfo->data->productPrice]);
-            products_history::created([
+            $price = floatval(str_replace(",","",$newInfo->data->holePrice));
+            $curentPrice = floatval(str_replace(",","",$product->curentPrice));
+            // dd($curentPrice);
+            $priceDiff =  (($price - $curentPrice) / $curentPrice) * 100 ;
+            $product->update(["curentPrice" => $price]);
+            products_history::create([
                 "product_id" => $product->id,
-                "CurrentPrice"=>$newInfo->data->productPrice,
+                "CurrentPrice"=>$newInfo->data->holePrice,
                 "priceDiff" => $priceDiff
             ]);
+            echo "done \n";
         }
     }
 }
