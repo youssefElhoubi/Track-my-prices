@@ -33,9 +33,9 @@ const scrapNewEgg = async (url) => {
 
 
         // Scrape product title
-        let title;
+        let productTitle;
         try {
-            title = await page.$eval(".product-title", el => el.innerText.trim());
+            productTitle = await page.$eval(".product-title", el => el.innerText.trim());
         } catch (error) {
             console.error("❌ Product title not found.");
             console.log(JSON.stringify({ error: "Product title is missing", code: 404 }));
@@ -43,9 +43,9 @@ const scrapNewEgg = async (url) => {
         }
 
         // Scrape product image
-        let image;
+        let productImage;
         try {
-            image = await page.$eval(".product-view-img-original", el => el.src);
+            productImage = await page.$eval(".product-view-img-original", el => el.src);
         } catch (error) {
             console.error("❌ Product image not found.");
             console.log(JSON.stringify({ error: "Product image is missing", code: 404 }));
@@ -68,7 +68,7 @@ const scrapNewEgg = async (url) => {
         const productInfo = {
             success: true,
             code: 200,
-            data: { title, image, holePrice,platformName:"NewEgg" }
+            data: { productTitle, productImage, holePrice,platformName:"NewEgg" }
         };
 
         console.log(JSON.stringify(productInfo));
@@ -81,4 +81,5 @@ const scrapNewEgg = async (url) => {
     }
 };
 
+scrapNewEgg(process.argv[2])
 export default scrapNewEgg;
