@@ -6,7 +6,7 @@ const ProductCard: React.FC = () => {
             <div className="p-4">
                 <div className="bg-gray-100 rounded-lg mb-4 flex items-center justify-center">
                     <img
-                        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-sodzeTlIL4YkFv0QgrZHPBWexaFDFZ.png"
+                        src="https://i5.walmartimages.com/seo/VILINICE-Noise-Cancelling-Headphones-Wireless-Bluetooth-Over-Ear-Headphones-with-Microphone-Black-Q8_b994b99c-835f-42fc-8094-9f6be0f9273b.be59955399cdbd1c25011d4a4251ba9b.jpeg"
                         alt="Wireless Headphones"
                         className="h-48 object-contain"
                     />

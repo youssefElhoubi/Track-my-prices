@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import UserCard from '../../components/AdmineComponents/UserCard'
 import axiosConfig from '../../api/axiosConfig'
+import Sidebar from '../../components/AdmineComponents/sidebar'
+import Header from '../../components/AdmineComponents/Header'
 
 const Users: React.FC = () => {
-     type users =  {
+    type users = {
         id: number
         name: string
         email: string
@@ -35,7 +37,7 @@ const Users: React.FC = () => {
         getallusers();
     }, [])
     console.log(Users);
-    
+
     const users = [
         {
             id: "1",
@@ -65,13 +67,20 @@ const Users: React.FC = () => {
     ]
 
     return (
-        <div className="p-6 max-w-4xl mx-auto space-y-4">
-            <h2 className="text-2xl font-bold mb-6">Users</h2>
-            {Users?.map((ele) => (
-                // ""
-                <UserCard key={ele.id} id={ele.id} name={ele.name} email={ele.email} password={""} role={ele.role} tier={ele.tier} created_at={ele.created_at} accountStatus={ele.status} exparation_date={undefined} Image_url={ele.Image_url}  />
-            ))}
-        </div>
+        <>
+            <Header />
+            <div className="flex h-screen bg-white">
+                {/* Sidebar */}
+                <Sidebar />
+                <div className="p-6 max-w-4xl mx-auto space-y-4">
+                    <h2 className="text-2xl font-bold mb-6">Users</h2>
+                    {Users?.map((ele) => (
+                        // ""
+                        <UserCard key={ele.id} id={ele.id} name={ele.name} email={ele.email} password={""} role={ele.role} tier={ele.tier} created_at={ele.created_at} accountStatus={ele.status} exparation_date={undefined} Image_url={ele.Image_url} />
+                    ))}
+                </div>
+            </div>
+        </>
     )
 }
 

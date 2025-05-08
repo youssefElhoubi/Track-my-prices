@@ -8,8 +8,7 @@ type props = {
 const Sidebar:React.FC<props> = ({ClassName,isOpen=false}) => {
   const navItems = [
     { name: "Home", href: "/admin" },
-    { name: "Products", href: "/products" },
-    { name: "Bands", href: "/bands" },
+    { name: "Products", href: "/admin/products" },
     { name: "Users", href: "/users" },
   ]
 

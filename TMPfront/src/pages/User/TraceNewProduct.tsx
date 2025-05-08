@@ -67,7 +67,7 @@ const TraceNewProduct: React.FC = () => {
 
                     <div className="space-y-6">
                         <div>
-                            <form onClick={handleSubmit(handleAnalyze)} >
+                            <form onSubmit={handleSubmit(handleAnalyze)} >
                                 <label htmlFor="productUrl" className="block text-sm font-medium text-gray-700 mb-1">
                                     Product URL
                                 </label>

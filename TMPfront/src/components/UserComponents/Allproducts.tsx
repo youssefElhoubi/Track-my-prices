@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axiosConfig from '../../api/axiosConfig';
+import decode from '../../actions/decode';
 
 const Allproducts: React.FC = () => {
     const [total, settotal] = useState(0);
+    const [UserInfo, setUserInfo] = useState();
     useEffect(() => {
         const total = async () => {
             try {
@@ -13,6 +15,10 @@ const Allproducts: React.FC = () => {
                     }
                 });
                 settotal(totalProducts.data.totale);
+                const userInfo = await axiosConfig.get("user/info",{headers:{
+                    Authorization:Token
+                }})
+                setUserInfo(userInfo.data.data.name);
             } catch (error) {
                 console.log(error);
             }
@@ -22,11 +28,11 @@ const Allproducts: React.FC = () => {
 
     return (
         <>
-            <div className="flex justify-between py-7">
-                <h1 className='text-3xl font-black'>
-                    All Tracked Products
-                </h1>
+            <div className="flex py-7">
+                <h1 className='text-3xl font-black mx-auto text-blue-700 bg-red-600'>
+                    hello {UserInfo} we have 
                 <p>{total} Products Found</p>
+                </h1>
             </div>
         </>
     )
