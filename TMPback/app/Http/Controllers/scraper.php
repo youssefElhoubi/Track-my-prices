@@ -11,6 +11,7 @@ class scraper extends Controller
 {
     public static function scrap(Request $request)
     {
+        ini_set('max_execution_time', 120);
         $process = new Process(["node", base_path("nodeScrapers/nodeScraper.js"), $request->url]);
         $process->run();
         $scrapedData = json_decode($process->getOutput());
